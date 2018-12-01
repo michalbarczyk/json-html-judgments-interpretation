@@ -17,8 +17,6 @@ public class JudgmentsPack {
     private List<Link> links = null;
     @JsonProperty("items")
     private List<Item> items = null;
-    //@JsonIgnore
-    //private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("links")
     public List<Link> getLinks() {
@@ -39,15 +37,4 @@ public class JudgmentsPack {
     public void setItems(List<Item> items) {
         this.items = items;
     }
-    /*
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-    */
 }
