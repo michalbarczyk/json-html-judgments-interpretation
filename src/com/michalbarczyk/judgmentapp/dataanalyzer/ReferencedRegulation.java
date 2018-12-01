@@ -1,4 +1,4 @@
-package com.michalbarczyk.judgmentapp.dataserializer;
+package com.michalbarczyk.judgmentapp.dataanalyzer;
 
 import java.util.HashMap;
 import java.util.Map;

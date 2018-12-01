@@ -1,5 +1,8 @@
 package com.michalbarczyk.judgmentapp.ui;
 
+import com.michalbarczyk.judgmentapp.dataanalyzer.Converter;
+import com.michalbarczyk.judgmentapp.dataanalyzer.Judge;
+import com.michalbarczyk.judgmentapp.dataanalyzer.JudgmentsPack;
 import org.fusesource.jansi.AnsiConsole;
 import org.jline.reader.*;
 import org.jline.reader.impl.completer.ArgumentCompleter;
@@ -15,7 +18,7 @@ public class ConsoleInterpreter {
 
     private String[] commandsList;
 
-    public ConsoleInterpreter() {
+    public ConsoleInterpreter(List<JudgmentsPack> judgmentsPacks) {
 
         commandsList = new String[] { "help", "action1", "action2", "exit" };
     }
@@ -26,7 +29,6 @@ public class ConsoleInterpreter {
         printWelcomeMessage();
         LineReaderBuilder readerBuilder = LineReaderBuilder.builder();
         List<Completer> completers = new LinkedList<>();
-
         completers.add(new StringsCompleter(commandsList));
         readerBuilder.completer(new ArgumentCompleter(completers));
 
@@ -36,15 +38,14 @@ public class ConsoleInterpreter {
         PrintWriter out = new PrintWriter(System.out);
 
         while ((line = readLine(reader, "")) != null) {
+
             if ("help".equals(line)) {
                 printHelp();
             } else if ("action1".equals(line)) {
-                AttributedStringBuilder a = new AttributedStringBuilder()
-                        .append("You have selected ")
-                        .append("action1", AttributedStyle.BOLD.foreground(AttributedStyle.RED))
-                        .append("!");
 
-                System.out.println(a.toAnsi());
+                for (Judge j : judgmentsPacks.get(5).getItems().get(99).getJudges())
+                    System.out.println(j.getName());
+
             } else if ("action2".equals(line)) {
                 AttributedStringBuilder a = new AttributedStringBuilder()
                         .append("You have selected ")
@@ -65,8 +66,7 @@ public class ConsoleInterpreter {
     }
 
     private void printWelcomeMessage() {
-        System.out
-                .println("Welcome to jLine Sample App. For assistance press TAB or type \"help\" then hit ENTER.");
+        System.out.println("Welcome to jLine Sample App. For assistance press TAB or type \"help\" then hit ENTER.");
 
     }
 

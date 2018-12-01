@@ -1,4 +1,4 @@
-package com.michalbarczyk.judgmentapp.dataserializer;
+package com.michalbarczyk.judgmentapp.dataanalyzer;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
