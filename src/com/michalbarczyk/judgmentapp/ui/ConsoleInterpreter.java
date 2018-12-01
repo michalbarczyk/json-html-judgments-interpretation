@@ -1,8 +1,6 @@
 package com.michalbarczyk.judgmentapp.ui;
 
-import com.michalbarczyk.judgmentapp.dataanalyzer.Converter;
-import com.michalbarczyk.judgmentapp.dataanalyzer.Judge;
-import com.michalbarczyk.judgmentapp.dataanalyzer.JudgmentsPack;
+import com.michalbarczyk.judgmentapp.dataanalyzer.DataKeeper;
 import org.fusesource.jansi.AnsiConsole;
 import org.jline.reader.*;
 import org.jline.reader.impl.completer.ArgumentCompleter;
@@ -17,10 +15,12 @@ import java.util.List;
 public class ConsoleInterpreter {
 
     private String[] commandsList;
+    private DataKeeper dataKeeper;
 
-    public ConsoleInterpreter(List<JudgmentsPack> judgmentsPacks) {
+    public ConsoleInterpreter(DataKeeper dataKeeper) {
 
         commandsList = new String[] { "help", "action1", "action2", "exit" };
+        this.dataKeeper = dataKeeper;
     }
 
     public void run() {
@@ -35,18 +35,22 @@ public class ConsoleInterpreter {
         LineReader reader = readerBuilder.build();
 
         String line;
+        String[] parsedLine;
         PrintWriter out = new PrintWriter(System.out);
+
 
         while ((line = readLine(reader, "")) != null) {
 
-            if ("help".equals(line)) {
+            parsedLine = parseLine(line);
+
+            if ("help".equals(parsedLine[0])) {
+
                 printHelp();
-            } else if ("action1".equals(line)) {
 
-                for (Judge j : judgmentsPacks.get(5).getItems().get(99).getJudges())
-                    System.out.println(j.getName());
+            } else if ("rubrum".equals(parsedLine[0])) {
 
-            } else if ("action2".equals(line)) {
+
+            } else if ("".equals(line)) {
                 AttributedStringBuilder a = new AttributedStringBuilder()
                         .append("You have selected ")
                         .append("action2", AttributedStyle.BOLD.foreground(AttributedStyle.RED))
@@ -72,7 +76,7 @@ public class ConsoleInterpreter {
 
     private void printHelp() {
         System.out.println("help		- Show help");
-        System.out.println("action1		- Execute action1");
+        System.out.println("rubrum 		- Execute action1");
         System.out.println("action2		- Execute action2");
         System.out.println("exit        - Exit the app");
 
@@ -91,5 +95,13 @@ public class ConsoleInterpreter {
             // e.g. ^D
             return null;
         }
+    }
+
+    private String[] parseLine(String line) {
+
+        String delims = "[ ]+";
+        String[] tokens = line.split(delims);
+
+        return tokens;
     }
 }

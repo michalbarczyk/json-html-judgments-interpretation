@@ -3,6 +3,8 @@ package com.michalbarczyk.judgmentapp.dataanalyzer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -288,4 +290,7 @@ public class Item {
         this.additionalProperties.put(name, value);
     }
 
+    /*public Rubrum getRubrum() {
+
+    }*/
 }

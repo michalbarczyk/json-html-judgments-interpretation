@@ -1,6 +1,7 @@
 package com.michalbarczyk.judgmentapp.ui;
 
 import com.michalbarczyk.judgmentapp.dataanalyzer.Converter;
+import com.michalbarczyk.judgmentapp.dataanalyzer.DataKeeper;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +11,9 @@ public class Init {
     public static void main(String[] args) {
 
         try {
-            ConsoleInterpreter cI = new ConsoleInterpreter(Converter.convertAll(new File(args[0])));
+
+            DataKeeper dK = new DataKeeper(Converter.convertAll(new File(args[0])));
+            ConsoleInterpreter cI = new ConsoleInterpreter(dK);
             cI.run();
 
         } catch (IOException e) {

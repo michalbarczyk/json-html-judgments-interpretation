@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 public class MainTest {
 
@@ -19,9 +20,7 @@ public class MainTest {
             e.printStackTrace();
         }
 
-        for (Judge j : judgmentsPack.getItems().get(99).getJudges()) {
-            System.out.println(j.getName());
-        }
+        System.out.println(DataKeeper.generateKey(judgmentsPack.getItems().get(0)));
 
 
 
