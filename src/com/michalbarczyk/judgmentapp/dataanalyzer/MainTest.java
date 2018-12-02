@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLOutput;
+
+
+// USE ONLY FOR TEST PURPOSE
 
 public class MainTest {
 
@@ -20,7 +22,7 @@ public class MainTest {
             e.printStackTrace();
         }
 
-        System.out.println(DataKeeper.generateKey(judgmentsPack.getItems().get(0)));
+
 
 
 

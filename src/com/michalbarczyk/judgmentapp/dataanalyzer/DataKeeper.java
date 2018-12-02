@@ -1,5 +1,6 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 public class DataKeeper {
 
     private List<JudgmentsPack> judgmentsPacks; //original structure as it was in JSON files
-    private Map<String, Item> judgments;
+    private Map<Integer, Item> judgments;
 
     public DataKeeper(List<JudgmentsPack> judgmentsPacks) {
 
@@ -18,32 +19,26 @@ public class DataKeeper {
 
             for (Item item : jP.getItems()) {
 
-                judgments.put(item.getCourtCases().get(0).getCaseNumber()+
-                        item.getJudgmentDate(), item);
+                judgments.put(item.getId(), item);
             }
         }
+    }
 
-        int i = 0;
+    public Map<Integer, Integer> getStatsJudgesPerJudgment() {
+
+        Map<Integer, Integer> stats = new HashMap<>();
+
         for (Item item : judgments.values()) {
-            System.out.println(++i + " " + item.getId());
+
+            Integer key = item.getJudges().size();
+            if (stats.containsKey(key))
+                stats.put(key, stats.remove(key) + 1);
+            else
+                stats.put(key, 1);
         }
+
+        return stats;
     }
-
-    public static String generateKey(Item item) { //useless
-
-        StringBuilder key = new StringBuilder();
-
-        key.append(item.getReferencedRegulations().get(0).getJournalNo());
-        key.append(item.getReferencedRegulations().get(0).getJournalYear());
-        key.append(item.getReferencedRegulations().get(0).getJournalEntry());
-
-        return key.toString();
-    }
-
-    /*public String getRubrum(String caseNumber) {
-
-
-    }*/
 
 
 
