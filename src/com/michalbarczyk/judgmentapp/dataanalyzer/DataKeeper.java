@@ -1,6 +1,5 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,27 +7,38 @@ import java.util.Map;
 public class DataKeeper {
 
     private List<JudgmentsPack> judgmentsPacks; //original structure as it was in JSON files
-    private Map<Integer, Item> judgments;
+    private Map<Integer, Item> items; // all judgments from JSON files
+    private CourtTypeStats courtTypeStats;
 
     public DataKeeper(List<JudgmentsPack> judgmentsPacks) {
 
         this.judgmentsPacks = judgmentsPacks;
-        judgments = new HashMap<>();
+        items = new HashMap<>();
 
         for (JudgmentsPack jP : judgmentsPacks) {
 
             for (Item item : jP.getItems()) {
 
-                judgments.put(item.getId(), item);
+                items.put(item.getId(), item);
             }
         }
+
+        courtTypeStats = new CourtTypeStats(this);
+    }
+
+    public CourtTypeStats getCourtTypeStats() {
+        return courtTypeStats;
+    }
+
+    public Map<Integer, Item> getItems() {
+        return this.items;
     }
 
     public Map<Integer, Integer> getStatsJudgesPerJudgment() {
 
         Map<Integer, Integer> stats = new HashMap<>();
 
-        for (Item item : judgments.values()) {
+        for (Item item : items.values()) {
 
             Integer key = item.getJudges().size();
             if (stats.containsKey(key))
@@ -39,6 +49,13 @@ public class DataKeeper {
 
         return stats;
     }
+
+
+
+
+
+
+
 
 
 

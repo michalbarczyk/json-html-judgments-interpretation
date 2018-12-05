@@ -58,10 +58,10 @@ public class ConsoleInterpreter {
                     //
                     break;
                 case Consts.STATS_NO_PER_COURT_TYPE:
-                    //
+                    dataKeeper.getCourtTypeStats().printStats();
                     break;
                 case Consts.TOP_10_JUDGES:
-                    //
+                    //judgesStats.printAll();
                     break;
                 case Consts.TOP_10_JUDGMENTS:
                     //

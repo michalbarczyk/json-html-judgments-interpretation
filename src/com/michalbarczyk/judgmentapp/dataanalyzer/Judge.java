@@ -3,6 +3,8 @@ package com.michalbarczyk.judgmentapp.dataanalyzer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -67,4 +69,20 @@ public class Judge {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (!(other instanceof Judge))
+            return false;
+        Judge that = (Judge) other;
+
+        return that.name.equals(this.name);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name);
+    }
 }
