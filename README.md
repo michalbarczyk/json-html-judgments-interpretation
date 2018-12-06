@@ -8,3 +8,4 @@ Application features that already work:
 
 Application features that do not work yet:
   - features no. ii, iii, iv, v  from: https://github.com/apohllo/obiektowe-lab/blob/master/lab8/Readme.md
+  (a problems with parsing String input in ConsoleInterpreter and not unambiguous CaseNumber)
