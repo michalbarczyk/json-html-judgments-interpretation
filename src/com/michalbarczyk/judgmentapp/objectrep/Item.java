@@ -1,9 +1,8 @@
-package com.michalbarczyk.judgmentapp.dataanalyzer;
+package com.michalbarczyk.judgmentapp.objectrep;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;

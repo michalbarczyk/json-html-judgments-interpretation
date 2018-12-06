@@ -1,16 +1,19 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
+import com.michalbarczyk.judgmentapp.objectrep.Item;
+import com.michalbarczyk.judgmentapp.objectrep.JudgmentsPack;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DataKeeper {
+public class RawDataKeeper {
 
     private List<JudgmentsPack> judgmentsPacks; //original structure as it was in JSON files
     private Map<Integer, Item> items; // all judgments from JSON files
-    private CourtTypeStats courtTypeStats;
 
-    public DataKeeper(List<JudgmentsPack> judgmentsPacks) {
+
+    public RawDataKeeper(List<JudgmentsPack> judgmentsPacks) {
 
         this.judgmentsPacks = judgmentsPacks;
         items = new HashMap<>();
@@ -22,40 +25,21 @@ public class DataKeeper {
                 items.put(item.getId(), item);
             }
         }
-
-        courtTypeStats = new CourtTypeStats(this);
-    }
-
-    public CourtTypeStats getCourtTypeStats() {
-        return courtTypeStats;
     }
 
     public Map<Integer, Item> getItems() {
         return this.items;
     }
 
-    public Map<Integer, Integer> getStatsJudgesPerJudgment() {
-
-        Map<Integer, Integer> stats = new HashMap<>();
+    /*public Rubrum getRubrumBySignature(String signature) {
 
         for (Item item : items.values()) {
 
-            Integer key = item.getJudges().size();
-            if (stats.containsKey(key))
-                stats.put(key, stats.remove(key) + 1);
-            else
-                stats.put(key, 1);
+            if(item.getCourtCases().get(0).equals(signature))
+                return new Rubrum(item);
+
         }
-
-        return stats;
-    }
-
-
-
-
-
-
-
+    }*/
 
 
 

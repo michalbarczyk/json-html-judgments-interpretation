@@ -1,7 +1,9 @@
-package com.michalbarczyk.judgmentapp.dataanalyzer;
+package com.michalbarczyk.judgmentapp.objectrep;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -90,6 +92,25 @@ public class ReferencedRegulation {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (!(other instanceof ReferencedRegulation))
+            return false;
+        ReferencedRegulation that = (ReferencedRegulation) other;
+
+        return that.journalEntry.equals(this.journalEntry) &&
+               that.journalNo.equals(this.journalNo) &&
+               that.journalYear.equals(this.journalYear);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(journalEntry,journalNo,journalYear);
     }
 
 }

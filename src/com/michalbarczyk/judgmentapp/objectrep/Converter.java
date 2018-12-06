@@ -1,7 +1,8 @@
-package com.michalbarczyk.judgmentapp.dataanalyzer;
+package com.michalbarczyk.judgmentapp.objectrep;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.michalbarczyk.judgmentapp.objectrep.JudgmentsPack;
 
 import java.io.File;
 import java.io.IOException;

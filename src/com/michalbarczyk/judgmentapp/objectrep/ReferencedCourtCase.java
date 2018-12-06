@@ -1,4 +1,4 @@
-package com.michalbarczyk.judgmentapp.dataanalyzer;
+package com.michalbarczyk.judgmentapp.objectrep;
 
 import java.util.HashMap;
 import java.util.List;

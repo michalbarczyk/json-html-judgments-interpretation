@@ -1,7 +1,6 @@
 package com.michalbarczyk.judgmentapp.ui;
 
-import com.michalbarczyk.judgmentapp.dataanalyzer.Consts;
-import com.michalbarczyk.judgmentapp.dataanalyzer.DataKeeper;
+import com.michalbarczyk.judgmentapp.dataanalyzer.*;
 import org.fusesource.jansi.AnsiConsole;
 import org.jline.reader.*;
 import org.jline.reader.impl.completer.ArgumentCompleter;
@@ -10,17 +9,25 @@ import org.jline.reader.impl.completer.StringsCompleter;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class ConsoleInterpreter {
 
     private String[] commandsList; //TODO
-    private DataKeeper dataKeeper;
+    private RawDataKeeper rawDataKeeper;
+    private JudgeStats judgeStats;
+    private CourtTypeStats courtTypeStats;
+    private JudgeItemRatioStats judgeItemRatioStats;
+    private RegulationStats regulationStats;
 
-    public ConsoleInterpreter(DataKeeper dataKeeper) {
 
-        commandsList = new String[] { "help", "action1", "action2", "exit" };
-        this.dataKeeper = dataKeeper;
+    public ConsoleInterpreter(RawDataKeeper rawDataKeeper) {
+
+        commandsList = new String[] { "help", "exit" }; //TODO
+        this.rawDataKeeper = rawDataKeeper;
+        this.judgeStats = null;
+        this.courtTypeStats = null;
+        this.judgeItemRatioStats = null;
+        this.regulationStats = null;
     }
 
     public void run() {
@@ -46,25 +53,33 @@ public class ConsoleInterpreter {
             switch (parsedLine[0]) {
 
                 case Consts.RUBRUM:
-                    //
+
                     break;
                 case Consts.JUSTIFICATION:
                     //
                     break;
                 case Consts.STATS_JUDGES_PER_JUDGMENT:
-                    printStatsJudgesPerJudgment();
+                    if (judgeItemRatioStats == null)
+                        judgeItemRatioStats = new JudgeItemRatioStats(rawDataKeeper);
+                    judgeItemRatioStats.print();
                     break;
                 case Consts.JUDGMENTS_NO_PER_JUDGE:
-                    //
+                    if (judgeStats == null)
+                        judgeStats = new JudgeStats(rawDataKeeper);
+                    //judgeStats.printItemsQtyByJudgeName(parsedLine);
                     break;
                 case Consts.STATS_NO_PER_COURT_TYPE:
-                    dataKeeper.getCourtTypeStats().printStats();
+                    if (courtTypeStats == null)
+                        courtTypeStats = new CourtTypeStats(rawDataKeeper);
+                    courtTypeStats.print();
                     break;
                 case Consts.TOP_10_JUDGES:
-                    //judgesStats.printAll();
-                    break;
-                case Consts.TOP_10_JUDGMENTS:
                     //
+                    break;
+                case Consts.TOP_10_REGULATIONS:
+                    if (regulationStats == null)
+                        regulationStats = new RegulationStats(rawDataKeeper);
+                    regulationStats.print();
                     break;
                 case Consts.STATS_NO_PER_MM_YYYY:
                     //
@@ -86,14 +101,12 @@ public class ConsoleInterpreter {
     }
 
     private void printWelcomeMessage() {
-        System.out.println("Welcome to jLine Sample App. For assistance press TAB or type \"help\" then hit ENTER.");
+        System.out.println("Welcome to Judgment App");
 
-    } //TODO
+    }
 
     private void printHelp() {
         System.out.println("help		- Show help");
-        System.out.println("rubrum 		- Execute action1");
-        System.out.println("action2		- Execute action2");
         System.out.println("exit        - Exit the app");
 
     } //TODO
@@ -107,10 +120,6 @@ public class ConsoleInterpreter {
             // e.g. ^C
             return null;
         }
-        catch (EndOfFileException e) {
-            // e.g. ^D
-            return null;
-        }
     }
 
     private String[] parseLine(String line) {
@@ -119,17 +128,6 @@ public class ConsoleInterpreter {
         String[] tokens = line.split(delims);
 
         return tokens;
-    }
-
-    private void printRubrums(String[] signatures) {} //TODO
-
-    private void printStatsJudgesPerJudgment() {
-
-        for (Map.Entry<Integer,Integer> stat : dataKeeper.getStatsJudgesPerJudgment().entrySet()) {
-
-            System.out.println("There were " + stat.getKey() + " judge(s) in " + stat.getValue() + " judgments");
-        }
-
     }
 
     private void exitMessage() {

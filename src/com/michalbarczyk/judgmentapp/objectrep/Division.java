@@ -1,4 +1,4 @@
-package com.michalbarczyk.judgmentapp.dataanalyzer;
+package com.michalbarczyk.judgmentapp.objectrep;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,23 +11,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "caseNumber"
+        "id"
 })
-public class CourtCase {
+public class Division {
 
-    @JsonProperty("caseNumber")
-    private String caseNumber;
+    @JsonProperty("id")
+    private Integer id;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("caseNumber")
-    public String getCaseNumber() {
-        return caseNumber;
+    @JsonProperty("id")
+    public Integer getId() {
+        return id;
     }
 
-    @JsonProperty("caseNumber")
-    public void setCaseNumber(String caseNumber) {
-        this.caseNumber = caseNumber;
+    @JsonProperty("id")
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @JsonAnyGetter

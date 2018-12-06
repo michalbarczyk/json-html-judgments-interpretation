@@ -1,21 +1,24 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
+import com.michalbarczyk.judgmentapp.objectrep.Item;
+import com.michalbarczyk.judgmentapp.objectrep.Judge;
+
 import java.util.*;
 
-public class JudgesStats {
+public class JudgeStats { // V element from features list
 
-    private DataKeeper dataKeeper;
+    private RawDataKeeper rawDataKeeper;
     private Map<Judge, Integer> qtyPerJudge;
 
-    public JudgesStats(DataKeeper dataKeeper) {
-        this.dataKeeper = dataKeeper;
+    public JudgeStats(RawDataKeeper rawDataKeeper) {
+        this.rawDataKeeper = rawDataKeeper;
         this.qtyPerJudge = new HashMap<>();
         calculateStats();
     }
 
     private void calculateStats() {
 
-        for (Item item : dataKeeper.getItems().values()) {
+        for (Item item : rawDataKeeper.getItems().values()) {
 
             for (Judge judge : item.getJudges()) {
 
@@ -25,6 +28,7 @@ public class JudgesStats {
                     qtyPerJudge.put(judge, 1);
             }
         }
+
 
     }
 
@@ -41,21 +45,9 @@ public class JudgesStats {
 
     }
 
-    /*public List<Judge> getTop10Judges {
+    public void printItemsQtyByJudgeName(String judgeName) {
 
-        //Collection<Map.Entry<Judge, Integer>> collection = qtyPerJudge.entrySet();
-        //Collections.s
-    }*/
-
-
-
-    public void printAll () {
-
-        int n = 0;
-        for (Map.Entry<Judge,Integer> stat : qtyPerJudge.entrySet()) {
-
-            System.out.println(++n + ": Judge " + stat.getKey().getName() + " contributed to " + stat.getValue() + " judgments");
-        }
+        System.out.println("Quantity of their cases = " + getItemsQtyByJudgeName(judgeName));
     }
 
 }

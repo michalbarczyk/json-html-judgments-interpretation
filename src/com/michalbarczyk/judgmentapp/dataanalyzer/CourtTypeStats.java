@@ -1,22 +1,24 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
+import com.michalbarczyk.judgmentapp.objectrep.Item;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class CourtTypeStats {
+public class CourtTypeStats { // VIII element from features list
 
-    private DataKeeper dataKeeper;
+    private RawDataKeeper rawDataKeeper;
     private Map<String, Integer> qtyPerCourtType;
 
-    public CourtTypeStats(DataKeeper dataKeeper) {
-        this.dataKeeper = dataKeeper;
+    public CourtTypeStats(RawDataKeeper rawDataKeeper) {
+        this.rawDataKeeper = rawDataKeeper;
         this.qtyPerCourtType = new HashMap<>();
         calculateStats();
     }
 
     private void calculateStats() {
 
-        for (Item item : dataKeeper.getItems().values()) {
+        for (Item item : rawDataKeeper.getItems().values()) {
 
             String key = item.getCourtType();
             if (qtyPerCourtType.containsKey(key))
@@ -32,7 +34,7 @@ public class CourtTypeStats {
         return this.qtyPerCourtType;
     }
 
-    public void printStats() {
+    public void print() {
 
         for (Map.Entry<String, Integer> entry : qtyPerCourtType.entrySet()) {
 
@@ -41,9 +43,4 @@ public class CourtTypeStats {
 
         }
     }
-
-
-
-
-
 }
