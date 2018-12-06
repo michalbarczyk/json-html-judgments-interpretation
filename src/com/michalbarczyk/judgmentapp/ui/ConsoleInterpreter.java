@@ -19,6 +19,7 @@ public class ConsoleInterpreter {
     private JudgeItemRatioStats judgeItemRatioStats;
     private RegulationStats regulationStats;
     private BestJudgesStats bestJudgesStats;
+    private MonthStats monthStats;
 
 
     public ConsoleInterpreter(RawDataKeeper rawDataKeeper) {
@@ -30,6 +31,7 @@ public class ConsoleInterpreter {
         this.judgeItemRatioStats = null;
         this.regulationStats = null;
         this.bestJudgesStats = null;
+        this.monthStats = null;
     }
 
     public void run() {
@@ -50,15 +52,15 @@ public class ConsoleInterpreter {
 
         while ((line = readLine(reader, "")) != null) {
 
-            parsedLine = parseLine(line);
+            parsedLine = Utils.parseLine(line);
 
             switch (parsedLine[0]) {
 
                 case Consts.RUBRUM:
-
+                    //TODO
                     break;
                 case Consts.JUSTIFICATION:
-                    //
+                    //TODO
                     break;
                 case Consts.STATS_JUDGES_PER_JUDGMENT:
                     if (judgeItemRatioStats == null)
@@ -86,7 +88,9 @@ public class ConsoleInterpreter {
                     regulationStats.print();
                     break;
                 case Consts.STATS_NO_PER_MM_YYYY:
-                    //
+                    if (monthStats == null)
+                        monthStats = new MonthStats(rawDataKeeper);
+                    monthStats.print();
                     break;
                 case Consts.HELP:
                     //
@@ -126,13 +130,7 @@ public class ConsoleInterpreter {
         }
     }
 
-    private String[] parseLine(String line) {
 
-        String delims = "[ ]+";
-        String[] tokens = line.split(delims);
-
-        return tokens;
-    }
 
     private void exitMessage() {
 
