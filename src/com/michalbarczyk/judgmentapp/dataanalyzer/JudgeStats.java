@@ -16,7 +16,7 @@ public class JudgeStats { // V element from features list
         calculateStats();
     }
 
-    private void calculateStats() {
+    protected void calculateStats() {
 
         for (Item item : rawDataKeeper.getItems().values()) {
 
@@ -30,6 +30,11 @@ public class JudgeStats { // V element from features list
         }
 
 
+    }
+
+    protected Map<Judge, Integer> getQtyPerJudge() {
+
+        return qtyPerJudge;
     }
 
     public Integer getItemsQtyByJudgeName(String judgeName) {

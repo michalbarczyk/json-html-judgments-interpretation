@@ -8,15 +8,16 @@ import java.util.*;
 public class RegulationStats { // IX element from features list
 
     private RawDataKeeper rawDataKeeper;
-    private List<ReferencedRegulation> top10;
+    private List<Map.Entry<ReferencedRegulation, Integer>> top;
+    private static final int TOPSIZE = 10;
 
     public RegulationStats(RawDataKeeper rawDataKeeper) {
         this.rawDataKeeper = rawDataKeeper;
-        this.top10 = new ArrayList<>();
-        calculateStats();
+        this.top = new ArrayList<>();
+        calculateTop();
     }
 
-    private void calculateStats() {
+    private void calculateTop() {
 
         Map<ReferencedRegulation, Integer> qtyPerRegulation = new HashMap<>();
 
@@ -31,8 +32,9 @@ public class RegulationStats { // IX element from features list
             }
         }
 
-        for (int i = 0; i < 10; i++) { // to be optimized
+        for (int i = 0; i < TOPSIZE; i++) { // to be optimized
 
+            if (qtyPerRegulation.isEmpty()) break;
             Map.Entry<ReferencedRegulation, Integer> maxEntry = null;
 
             for (Map.Entry<ReferencedRegulation, Integer> entry : qtyPerRegulation.entrySet())
@@ -43,21 +45,24 @@ public class RegulationStats { // IX element from features list
                 }
             }
 
-            top10.set(i, maxEntry.getKey());
+            top.add(maxEntry);
+            qtyPerRegulation.remove(maxEntry.getKey());
+
         }
 
     }
 
-    private List<ReferencedRegulation> getTop10() {
+    private List<Map.Entry<ReferencedRegulation, Integer>> getTop() {
 
-        return this.top10;
+        return this.top;
     }
 
     public void print() {
 
-        for (int i = 0; i < 10; i++) {
+        for (Map.Entry<ReferencedRegulation, Integer> entry : top) {
 
-            System.out.println(i+1 + ": " + getTop10().get(i).getJournalTitle());
+            System.out.println((getTop().indexOf(entry) + 1) + ": " + entry.getKey().getJournalTitle() +
+                    " was referenced " + entry.getValue() + " time(s)");
         }
     }
 }

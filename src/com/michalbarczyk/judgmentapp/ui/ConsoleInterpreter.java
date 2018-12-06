@@ -18,6 +18,7 @@ public class ConsoleInterpreter {
     private CourtTypeStats courtTypeStats;
     private JudgeItemRatioStats judgeItemRatioStats;
     private RegulationStats regulationStats;
+    private BestJudgesStats bestJudgesStats;
 
 
     public ConsoleInterpreter(RawDataKeeper rawDataKeeper) {
@@ -28,6 +29,7 @@ public class ConsoleInterpreter {
         this.courtTypeStats = null;
         this.judgeItemRatioStats = null;
         this.regulationStats = null;
+        this.bestJudgesStats = null;
     }
 
     public void run() {
@@ -74,7 +76,9 @@ public class ConsoleInterpreter {
                     courtTypeStats.print();
                     break;
                 case Consts.TOP_10_JUDGES:
-                    //
+                    if (bestJudgesStats == null)
+                        bestJudgesStats = new BestJudgesStats(rawDataKeeper);
+                    bestJudgesStats.print();
                     break;
                 case Consts.TOP_10_REGULATIONS:
                     if (regulationStats == null)
