@@ -1,16 +1,15 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
+import com.michalbarczyk.judgmentapp.Utils;
 import com.michalbarczyk.judgmentapp.objectrep.Item;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.michalbarczyk.judgmentapp.dataanalyzer.Utils.parseDate;
+/**
+ * Class responsible for VII element from the features list
+ */
 
-public class MonthStats {
+public class MonthStats implements IStats {
 
     private RawDataKeeper rawDataKeeper;
     private Map<String, Integer> qtyPerMonth;

@@ -2,8 +2,11 @@ package com.michalbarczyk.judgmentapp.dataanalyzer;
 
 import com.michalbarczyk.judgmentapp.objectrep.Item;
 import com.michalbarczyk.judgmentapp.objectrep.Judge;
-
 import java.util.*;
+
+/**
+ * Class responsible for V element from the features list
+ */
 
 public class JudgeStats { // V element from features list
 
@@ -50,7 +53,7 @@ public class JudgeStats { // V element from features list
 
     }
 
-    public void printItemsQtyByJudgeName(String judgeName) {
+    public void print(String judgeName) {
 
         System.out.println("Quantity of their cases = " + getItemsQtyByJudgeName(judgeName));
     }

@@ -1,4 +1,4 @@
-package com.michalbarczyk.judgmentapp.dataanalyzer;
+package com.michalbarczyk.judgmentapp;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class Utils {
     public static String extractYYYYMM(String dateStr) {
 
         String[] tokens = parseDate(dateStr);
-        return tokens[0] + "-" +tokens[1];
+        return tokens[0] + "-" + tokens[1];
 
     }
 }

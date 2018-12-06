@@ -2,10 +2,13 @@ package com.michalbarczyk.judgmentapp.dataanalyzer;
 
 import com.michalbarczyk.judgmentapp.objectrep.Item;
 import com.michalbarczyk.judgmentapp.objectrep.ReferencedRegulation;
-
 import java.util.*;
 
-public class RegulationStats { // IX element from features list
+/**
+ * Class responsible for IX element from the features list
+ */
+
+public class RegulationStats implements IStats { // IX element from features list
 
     private RawDataKeeper rawDataKeeper;
     private List<Map.Entry<ReferencedRegulation, Integer>> top;
@@ -32,7 +35,7 @@ public class RegulationStats { // IX element from features list
             }
         }
 
-        for (int i = 0; i < TOPSIZE; i++) { // to be optimized
+        for (int i = 0; i < TOPSIZE; i++) {
 
             if (qtyPerRegulation.isEmpty()) break;
             Map.Entry<ReferencedRegulation, Integer> maxEntry = null;

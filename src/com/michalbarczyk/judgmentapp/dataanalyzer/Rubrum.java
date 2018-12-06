@@ -3,7 +3,6 @@ package com.michalbarczyk.judgmentapp.dataanalyzer;
 import com.michalbarczyk.judgmentapp.objectrep.CourtCase;
 import com.michalbarczyk.judgmentapp.objectrep.Item;
 import com.michalbarczyk.judgmentapp.objectrep.Judge;
-
 import java.util.List;
 
 public class Rubrum {

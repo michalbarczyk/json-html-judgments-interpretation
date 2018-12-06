@@ -1,11 +1,14 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
 import com.michalbarczyk.judgmentapp.objectrep.Item;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class JudgeItemRatioStats { // X element from features list
+/**
+ * Class responsible for X element from the features list
+ */
+
+public class JudgeItemRatioStats implements IStats {
 
     private RawDataKeeper rawDataKeeper;
     private Map<Integer, Integer> qtyPerItem;

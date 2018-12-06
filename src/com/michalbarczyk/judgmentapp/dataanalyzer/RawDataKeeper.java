@@ -2,10 +2,13 @@ package com.michalbarczyk.judgmentapp.dataanalyzer;
 
 import com.michalbarczyk.judgmentapp.objectrep.Item;
 import com.michalbarczyk.judgmentapp.objectrep.JudgmentsPack;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * Class responsible for keeping data possessed from JSON files containing Judgments(Items)
+ */
 
 public class RawDataKeeper {
 

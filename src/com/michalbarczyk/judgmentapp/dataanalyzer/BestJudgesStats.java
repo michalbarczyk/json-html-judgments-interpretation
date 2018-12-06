@@ -1,15 +1,15 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
-import com.michalbarczyk.judgmentapp.objectrep.Item;
 import com.michalbarczyk.judgmentapp.objectrep.Judge;
-import com.michalbarczyk.judgmentapp.objectrep.ReferencedRegulation;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BestJudgesStats extends JudgeStats {
+/**
+ * Class responsible for VI element from the features list
+ */
+
+public class BestJudgesStats extends JudgeStats implements IStats {
 
     private List<Map.Entry<Judge, Integer>> top;
     private static final int TOPSIZE = 10;

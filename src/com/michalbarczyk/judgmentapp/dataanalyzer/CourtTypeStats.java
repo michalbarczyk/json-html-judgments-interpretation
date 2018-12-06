@@ -1,11 +1,14 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
 import com.michalbarczyk.judgmentapp.objectrep.Item;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class CourtTypeStats { // VIII element from features list
+/**
+ * Class responsible for VIII element from the features list
+ */
+
+public class CourtTypeStats implements IStats {
 
     private RawDataKeeper rawDataKeeper;
     private Map<String, Integer> qtyPerCourtType;
