@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Utils {
-
+    /**
+     *
+     * @param dateStr
+     * @return array [YYYY, MM, DD] from dateStr YYYY-MM-DD
+     */
     public static String[] parseDate(String dateStr) {
 
         String delims = "-";
@@ -21,6 +25,11 @@ public class Utils {
         return tokens;
     }
 
+    /**
+     *
+     * @param dateStr
+     * @return year, month of strDate as YYYY-MM
+     */
     public static String extractYYYYMM(String dateStr) {
 
         String[] tokens = parseDate(dateStr);
