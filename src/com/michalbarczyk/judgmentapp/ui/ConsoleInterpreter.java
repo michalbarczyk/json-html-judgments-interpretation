@@ -8,38 +8,33 @@ import org.jline.reader.*;
 import org.jline.reader.impl.completer.ArgumentCompleter;
 import org.jline.reader.impl.completer.StringsCompleter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class ConsoleInterpreter {
 
-    private String[] commandsList;
     private RawDataKeeper rawDataKeeper;
     private JudgeStats judgeStats;
-    private CourtTypeStats courtTypeStats;
-    private JudgeItemRatioStats judgeItemRatioStats;
+    //DONE private CourtTypeStats courtTypeStats;
+    //DONE private JudgeItemRatioStats judgeItemRatioStats;
     private RegulationStats regulationStats;
     private BestJudgesStats bestJudgesStats;
     private MonthStats monthStats;
 
+    private List<IConsoleElement> iConsoleElements;
+
 
     public ConsoleInterpreter(RawDataKeeper rawDataKeeper) {
 
-        commandsList = new String[]{Consts.EXIT,
-                                    Consts.HELP,
-                                    Consts.JUDGMENTS_NO_PER_JUDGE,
-                                    Consts.JUSTIFICATION,
-                                    Consts.STATS_JUDGES_PER_JUDGMENT,
-                                    Consts.STATS_NO_PER_COURT_TYPE,
-                                    Consts.STATS_NO_PER_YYYY_MM,
-                                    Consts.TOP_10_JUDGES,
-                                    Consts.TOP_10_REGULATIONS,
-                                    Consts.RUBRUM
-        };
         this.rawDataKeeper = rawDataKeeper;
+        iConsoleElements = new ArrayList<>();
+
+        iConsoleElements.add(new CourtTypeStats(rawDataKeeper));
+        iConsoleElements.add(new JudgeItemRatioStats(rawDataKeeper));
+
+
         this.judgeStats = null;
-        this.courtTypeStats = new CourtTypeStats(rawDataKeeper);
-        this.judgeItemRatioStats = new JudgeItemRatioStats(rawDataKeeper);
         this.regulationStats = null;
         this.bestJudgesStats = null;
         this.monthStats = null;
@@ -51,7 +46,7 @@ public class ConsoleInterpreter {
         printWelcomeMessage();
         LineReaderBuilder readerBuilder = LineReaderBuilder.builder();
         List<Completer> completers = new LinkedList<>();
-        completers.add(new StringsCompleter(commandsList));
+        //completers.add(new StringsCompleter(commandsList));
         readerBuilder.completer(new ArgumentCompleter(completers));
 
         LineReader reader = readerBuilder.build();
@@ -65,49 +60,14 @@ public class ConsoleInterpreter {
 
             parsedLine = Utils.parseLine(line);
 
-            switch (parsedLine[0]) {
+            for (IConsoleElement iCE : iConsoleElements) {
 
-                case Consts.RUBRUM:
-                    //TODO
-                    break;
-                case Consts.JUSTIFICATION:
-                    //TODO
-                    break;
-                case Consts.STATS_JUDGES_PER_JUDGMENT:
-                    System.out.print(judgeItemRatioStats.getResult());
-                    break;
-                case Consts.JUDGMENTS_NO_PER_JUDGE:
-                    if (judgeStats == null)
-                        judgeStats = new JudgeStats(rawDataKeeper);
-                    //judgeStats.printItemsQtyByJudgeName(parsedLine);
-                    break;
-                case Consts.STATS_NO_PER_COURT_TYPE:
-                    System.out.print(courtTypeStats.getResult());
-                    break;
-                case Consts.TOP_10_JUDGES:
-                    if (bestJudgesStats == null)
-                        bestJudgesStats = new BestJudgesStats(rawDataKeeper);
-                    bestJudgesStats.print();
-                    break;
-                case Consts.TOP_10_REGULATIONS:
-                    if (regulationStats == null)
-                        regulationStats = new RegulationStats(rawDataKeeper);
-                    regulationStats.print();
-                    break;
-                case Consts.STATS_NO_PER_YYYY_MM:
-                    if (monthStats == null)
-                        monthStats = new MonthStats(rawDataKeeper);
-                    monthStats.print();
-                    break;
-                case Consts.HELP:
-                    printHelp();
-                    break;
-                case Consts.EXIT:
-                    printExitMessage();
-                    return;
+                if (parsedLine[0].equals(iCE.getName())) {
 
-                    default:
-                        handleInvalidCommand(parsedLine[0]);
+                    System.out.print(iCE.getResult());
+                    break;
+                }
+
 
             }
         }

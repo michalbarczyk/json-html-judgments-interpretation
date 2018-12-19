@@ -1,6 +1,6 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
-interface IConsoleElement {
+public interface IConsoleElement {
 
     String getResult();
     String getName();
