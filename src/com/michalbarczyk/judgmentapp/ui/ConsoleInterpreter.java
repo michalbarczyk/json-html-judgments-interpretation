@@ -6,7 +6,7 @@ import com.michalbarczyk.judgmentapp.dataanalyzer.*;
 import org.fusesource.jansi.AnsiConsole;
 import org.jline.reader.*;
 import org.jline.reader.impl.completer.ArgumentCompleter;
-import org.jline.reader.impl.completer.StringsCompleter;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,29 +15,21 @@ import java.util.List;
 public class ConsoleInterpreter {
 
     private RawDataKeeper rawDataKeeper;
-    private JudgeStats judgeStats;
-    //DONE private CourtTypeStats courtTypeStats;
-    //DONE private JudgeItemRatioStats judgeItemRatioStats;
-    private RegulationStats regulationStats;
-    private BestJudgesStats bestJudgesStats;
-    private MonthStats monthStats;
-
-    private List<IConsoleElement> iConsoleElements;
+    private List<IConsoleStats> iConsoleStats;
+    private List<IConsoleInfo> iConsoleInfos;
 
 
     public ConsoleInterpreter(RawDataKeeper rawDataKeeper) {
 
         this.rawDataKeeper = rawDataKeeper;
-        iConsoleElements = new ArrayList<>();
+        this.iConsoleStats = new ArrayList<>();
+        this.iConsoleInfos = new ArrayList<>();
 
-        iConsoleElements.add(new CourtTypeStats(rawDataKeeper));
-        iConsoleElements.add(new JudgeItemRatioStats(rawDataKeeper));
+        iConsoleStats.add(new CourtTypeStats(rawDataKeeper));
+        iConsoleStats.add(new JudgeItemRatioStats(rawDataKeeper));
 
+        iConsoleInfos.add(new Rubrum(rawDataKeeper));
 
-        this.judgeStats = null;
-        this.regulationStats = null;
-        this.bestJudgesStats = null;
-        this.monthStats = null;
     }
 
     public void run() {
@@ -46,7 +38,6 @@ public class ConsoleInterpreter {
         printWelcomeMessage();
         LineReaderBuilder readerBuilder = LineReaderBuilder.builder();
         List<Completer> completers = new LinkedList<>();
-        //completers.add(new StringsCompleter(commandsList));
         readerBuilder.completer(new ArgumentCompleter(completers));
 
         LineReader reader = readerBuilder.build();
@@ -60,15 +51,24 @@ public class ConsoleInterpreter {
 
             parsedLine = Utils.parseLine(line);
 
-            for (IConsoleElement iCE : iConsoleElements) {
+            for (IConsoleStats iCS : iConsoleStats) {
 
-                if (parsedLine[0].equals(iCE.getName())) {
+                if (parsedLine[0].equals(iCS.getName())) {
 
-                    System.out.print(iCE.getResult());
+                    System.out.print(iCS.getResult());
                     break;
                 }
 
 
+            }
+
+            for (IConsoleInfo iCI : iConsoleInfos) {
+
+                if (parsedLine[0].equals(iCI.getName())) {
+
+                    System.out.print(iCI.getResult(parsedLine));
+                    break;
+                }
             }
         }
 

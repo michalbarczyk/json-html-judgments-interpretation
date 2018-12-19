@@ -19,7 +19,7 @@ public class Utils {
 
     public static String[] parseLine(String line) {
 
-        String delims = "[ ]+";
+        String delims = "[,]+";
         String[] tokens = line.split(delims);
 
         return tokens;

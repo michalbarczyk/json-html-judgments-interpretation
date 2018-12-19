@@ -8,7 +8,7 @@ import java.util.Map;
  * Class responsible for X element from the features list
  */
 
-public class JudgeItemRatioStats implements IConsoleElement {
+public class JudgeItemRatioStats implements IConsoleStats {
 
     private RawDataKeeper rawDataKeeper;
     private Map<Integer, Integer> qtyPerItem;

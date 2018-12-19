@@ -8,18 +8,17 @@ import java.util.Map;
  * Class responsible for VIII element from the features list
  */
 
-public class CourtTypeStats implements IConsoleElement {
+public class CourtTypeStats extends BasicConsoleStats {
 
-    private RawDataKeeper rawDataKeeper;
     private Map<String, Integer> qtyPerCourtType;
-    private String result;
     private final String NAME = "courts";
     private final String HELP = "prints amount of judgments per court type";
 
     public CourtTypeStats(RawDataKeeper rawDataKeeper) {
-        this.rawDataKeeper = rawDataKeeper;
+
+        super(rawDataKeeper);
         this.qtyPerCourtType = new HashMap<>();
-        this.result = null;
+
     }
 
     private void calculate() {
