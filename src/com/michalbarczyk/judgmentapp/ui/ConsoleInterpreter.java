@@ -29,6 +29,7 @@ public class ConsoleInterpreter {
         iConsoleStats.add(new JudgeItemRatioStats(rawDataKeeper));
 
         iConsoleInfos.add(new Rubrum(rawDataKeeper));
+        iConsoleInfos.add(new Content(rawDataKeeper));
 
     }
 

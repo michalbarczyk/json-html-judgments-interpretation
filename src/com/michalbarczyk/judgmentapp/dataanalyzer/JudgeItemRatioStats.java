@@ -8,20 +8,18 @@ import java.util.Map;
  * Class responsible for X element from the features list
  */
 
-public class JudgeItemRatioStats implements IConsoleStats {
+public class JudgeItemRatioStats extends BasicConsoleStats {
 
-    private RawDataKeeper rawDataKeeper;
+
     private Map<Integer, Integer> qtyPerItem;
-    private String result;
     private final String NAME = "jury";
     private final String HELP = "prints amount of judges per judgments";
 
 
     public JudgeItemRatioStats(RawDataKeeper rawDataKeeper) {
 
-        this.rawDataKeeper = rawDataKeeper;
-        this.qtyPerItem = new HashMap<>();
-        result = null;
+        super(rawDataKeeper);
+        qtyPerItem = new HashMap<>();
     }
 
     private void calculate() {

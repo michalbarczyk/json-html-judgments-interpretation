@@ -59,7 +59,7 @@ public class Rubrum implements IConsoleInfo {
             Item item = rawDataKeeper.getItems().get(args[i]);
 
             if (item == null) {
-                result.append("there is no judgment: ");
+                result.append("there is not judgment: ");
                 result.append(args[i]);
                 result.append("\n");
             }
