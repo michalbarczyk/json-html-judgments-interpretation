@@ -13,7 +13,7 @@ import java.util.Map;
 public class RawDataKeeper {
 
     private List<JudgmentsPack> judgmentsPacks; //original structure as it was in JSON files
-    private Map<Integer, Item> items; // all judgments from JSON files
+    private Map<String, Item> items; // all judgments from JSON files
 
 
     public RawDataKeeper(List<JudgmentsPack> judgmentsPacks) {
@@ -25,12 +25,12 @@ public class RawDataKeeper {
 
             for (Item item : jP.getItems()) {
 
-                items.put(item.getId(), item);
+                items.put(item.getCourtCases().get(0).getCaseNumber(), item);
             }
         }
     }
 
-    public Map<Integer, Item> getItems() {
+    public Map<String, Item> getItems() {
         return this.items;
     }
 

@@ -8,7 +8,7 @@ import java.util.*;
  * Class responsible for IX element from the features list
  */
 
-public class RegulationStats implements IStats { // IX element from features list
+public class RegulationStats /*implements IStats*/ { // IX element from features list
 
     private RawDataKeeper rawDataKeeper;
     private List<Map.Entry<ReferencedRegulation, Integer>> top;

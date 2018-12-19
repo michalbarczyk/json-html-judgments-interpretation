@@ -8,18 +8,21 @@ import java.util.Map;
  * Class responsible for VIII element from the features list
  */
 
-public class CourtTypeStats implements IStats {
+public class CourtTypeStats implements IConsoleElement {
 
     private RawDataKeeper rawDataKeeper;
     private Map<String, Integer> qtyPerCourtType;
+    private String result;
+    private final String NAME = "courts";
+    private final String HELP = "prints amount of judgments per court type";
 
     public CourtTypeStats(RawDataKeeper rawDataKeeper) {
         this.rawDataKeeper = rawDataKeeper;
         this.qtyPerCourtType = new HashMap<>();
-        calculateStats();
+        this.result = null;
     }
 
-    private void calculateStats() {
+    private void calculate() {
 
         for (Item item : rawDataKeeper.getItems().values()) {
 
@@ -29,21 +32,38 @@ public class CourtTypeStats implements IStats {
             else
                 qtyPerCourtType.put(key, 1);
         }
-
     }
 
-    private Map<String, Integer> getQtyPerCourtType() {
+    public String getResult() {
 
-        return this.qtyPerCourtType;
-    }
+        if (this.result == null) {
 
-    public void print() {
+            calculate();
 
-        for (Map.Entry<String, Integer> entry : qtyPerCourtType.entrySet()) {
+            StringBuilder result = new StringBuilder();
 
-            System.out.println("There were " + entry.getValue()
-                    + " judgments in " + entry.getKey() + " court");
+            for (Map.Entry<String, Integer> entry : qtyPerCourtType.entrySet()) {
 
+                result.append("There were ");
+                result.append(entry.getValue());
+                result.append(" judgments in ");
+                result.append(entry.getKey());
+                result.append(" court\n");
+            }
+
+            this.result = result.toString();
         }
+
+        return this.result;
+    }
+
+    public String getName() {
+
+        return this.NAME;
+    }
+
+    public String getHelp() {
+
+        return this.HELP;
     }
 }

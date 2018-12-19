@@ -9,7 +9,7 @@ import java.util.Map;
  * Class responsible for VII element from the features list
  */
 
-public class MonthStats implements IStats {
+public class MonthStats /*implements IStats*/ {
 
     private RawDataKeeper rawDataKeeper;
     private Map<String, Integer> qtyPerMonth;

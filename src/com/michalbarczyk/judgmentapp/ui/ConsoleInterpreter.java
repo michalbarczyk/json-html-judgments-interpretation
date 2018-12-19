@@ -38,8 +38,8 @@ public class ConsoleInterpreter {
         };
         this.rawDataKeeper = rawDataKeeper;
         this.judgeStats = null;
-        this.courtTypeStats = null;
-        this.judgeItemRatioStats = null;
+        this.courtTypeStats = new CourtTypeStats(rawDataKeeper);
+        this.judgeItemRatioStats = new JudgeItemRatioStats(rawDataKeeper);
         this.regulationStats = null;
         this.bestJudgesStats = null;
         this.monthStats = null;
@@ -74,9 +74,7 @@ public class ConsoleInterpreter {
                     //TODO
                     break;
                 case Consts.STATS_JUDGES_PER_JUDGMENT:
-                    if (judgeItemRatioStats == null)
-                        judgeItemRatioStats = new JudgeItemRatioStats(rawDataKeeper);
-                    judgeItemRatioStats.print();
+                    System.out.print(judgeItemRatioStats.getResult());
                     break;
                 case Consts.JUDGMENTS_NO_PER_JUDGE:
                     if (judgeStats == null)
@@ -84,9 +82,7 @@ public class ConsoleInterpreter {
                     //judgeStats.printItemsQtyByJudgeName(parsedLine);
                     break;
                 case Consts.STATS_NO_PER_COURT_TYPE:
-                    if (courtTypeStats == null)
-                        courtTypeStats = new CourtTypeStats(rawDataKeeper);
-                    courtTypeStats.print();
+                    System.out.print(courtTypeStats.getResult());
                     break;
                 case Consts.TOP_10_JUDGES:
                     if (bestJudgesStats == null)

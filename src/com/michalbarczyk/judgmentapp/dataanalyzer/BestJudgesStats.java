@@ -9,7 +9,7 @@ import java.util.Map;
  * Class responsible for VI element from the features list
  */
 
-public class BestJudgesStats extends JudgeStats implements IStats {
+public class BestJudgesStats extends JudgeStats /*implements IStats*/ {
 
     private List<Map.Entry<Judge, Integer>> top;
     private static final int TOPSIZE = 10;
@@ -24,7 +24,7 @@ public class BestJudgesStats extends JudgeStats implements IStats {
 
     private void calculateTop() {
 
-        for (int i = 0; i < TOPSIZE; i++) { // to be optimized
+        for (int i = 0; i < TOPSIZE; i++) {
 
             if (getQtyPerJudge().isEmpty()) break;
             Map.Entry<Judge, Integer> maxEntry = null;
