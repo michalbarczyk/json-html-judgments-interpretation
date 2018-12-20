@@ -17,6 +17,7 @@ public class ConsoleInterpreter {
     private RawDataKeeper rawDataKeeper;
     private List<IConsoleStats> iConsoleStats;
     private List<IConsoleInfo> iConsoleInfos;
+    private String help;
 
 
     public ConsoleInterpreter(RawDataKeeper rawDataKeeper) {
@@ -24,12 +25,16 @@ public class ConsoleInterpreter {
         this.rawDataKeeper = rawDataKeeper;
         this.iConsoleStats = new ArrayList<>();
         this.iConsoleInfos = new ArrayList<>();
+        this.help = null;
 
         iConsoleStats.add(new CourtTypeStats(rawDataKeeper));
         iConsoleStats.add(new JudgeItemRatioStats(rawDataKeeper));
+        iConsoleStats.add(new MonthStats(rawDataKeeper));
+        iConsoleStats.add(new RegulationStats(rawDataKeeper));
 
         iConsoleInfos.add(new Rubrum(rawDataKeeper));
         iConsoleInfos.add(new Content(rawDataKeeper));
+        iConsoleInfos.add(new JudgeStats(rawDataKeeper));
 
     }
 
@@ -52,6 +57,12 @@ public class ConsoleInterpreter {
 
             parsedLine = Utils.parseLine(line);
 
+            if (parsedLine[0].equals("help"))
+                System.out.print(getHelp());
+
+            if (parsedLine[0].equals("exit"))
+                break;
+
             for (IConsoleStats iCS : iConsoleStats) {
 
                 if (parsedLine[0].equals(iCS.getName())) {
@@ -59,8 +70,6 @@ public class ConsoleInterpreter {
                     System.out.print(iCS.getResult());
                     break;
                 }
-
-
             }
 
             for (IConsoleInfo iCI : iConsoleInfos) {
@@ -80,28 +89,30 @@ public class ConsoleInterpreter {
         System.out.println("Welcome to Judgment App");
     }
 
-    private void printHelp() {
+    private String getHelp() {
 
-        System.out.println(Consts.EXIT + " - exit applicaton");
-        System.out.println(Consts.HELP + " - print help");
-        System.out.println(Consts.JUDGMENTS_NO_PER_JUDGE + " - prints judgments quantity per judge");
-        System.out.println(Consts.JUSTIFICATION + " - prints justification by signature");
-        System.out.println(Consts.STATS_JUDGES_PER_JUDGMENT + " - prints amount of judges per judgments");
-        System.out.println(Consts.STATS_NO_PER_COURT_TYPE + " - prints amount of judgments per court type");
-        System.out.println(Consts.STATS_NO_PER_YYYY_MM + " - prints amount of judgments per month");
-        System.out.println(Consts.TOP_10_JUDGES + " - prints top 10 most active judges");
-        System.out.println(Consts.TOP_10_REGULATIONS + " - prints top 10 most referenced regulations");
-        System.out.println(Consts.RUBRUM + " - prints rubrum(s) by signature(s)");
-    }
+        if (help == null) {
 
-    private void printExitMessage() {
+            StringBuilder result = new StringBuilder();
 
-        System.out.println("Goodbye");
-    }
+            for (IConsoleInfo iCI : iConsoleInfos) {
+                result.append(iCI.getName());
+                result.append(" -> ");
+                result.append(iCI.getHelp());
+                result.append("\n");
+            }
 
-    private void handleInvalidCommand(String invalidCommand) {
+            for (IConsoleStats iCS : iConsoleStats) {
+                result.append(iCS.getName());
+                result.append(" -> ");
+                result.append(iCS.getHelp());
+                result.append("\n");
+            }
 
-        System.out.println(invalidCommand + " is invalid, type help");
+            this.help = result.toString();
+        }
+
+        return this.help;
     }
 
     private String readLine(LineReader reader, String promtMessage) {

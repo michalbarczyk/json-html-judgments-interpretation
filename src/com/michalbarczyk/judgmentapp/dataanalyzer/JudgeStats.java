@@ -8,54 +8,78 @@ import java.util.*;
  * Class responsible for V element from the features list
  */
 
-public class JudgeStats { // V element from features list
+public class JudgeStats implements IConsoleInfo{
 
+    private final String NAME = "judge";
+    private final String HELP = "prints number of judgments a judge participated in";
     private RawDataKeeper rawDataKeeper;
-    private Map<Judge, Integer> qtyPerJudge;
+    private Map<String, Integer> qtyPerJudge;
+    private boolean calculated;
 
     public JudgeStats(RawDataKeeper rawDataKeeper) {
+
         this.rawDataKeeper = rawDataKeeper;
         this.qtyPerJudge = new HashMap<>();
-        calculateStats();
+        this.calculated = false;
     }
 
-    protected void calculateStats() {
+    private void calculate() {
 
         for (Item item : rawDataKeeper.getItems().values()) {
 
             for (Judge judge : item.getJudges()) {
 
                 if (qtyPerJudge.containsKey(judge))
-                    qtyPerJudge.put(judge, qtyPerJudge.remove(judge) + 1);
+                    qtyPerJudge.put(judge.getName(), qtyPerJudge.remove(judge) + 1);
                 else
-                    qtyPerJudge.put(judge, 1);
+                    qtyPerJudge.put(judge.getName(), 1);
             }
         }
 
-
+        calculated = true;
     }
 
-    protected Map<Judge, Integer> getQtyPerJudge() {
+    public Map<String, Integer> getQtyPerJudge() {
+
+        if (!calculated)
+            calculate();
 
         return qtyPerJudge;
     }
 
-    public Integer getItemsQtyByJudgeName(String judgeName) {
+    @Override
+    public String getResult(String[] args) {
 
-        Judge judge = new Judge();
-        judge.setName(judgeName);
-        return qtyPerJudge.get(judge);
+        if (!calculated)
+            calculate();
+
+        StringBuilder result = new StringBuilder();
+        Integer judgeQty = qtyPerJudge.get(args[1]);
+
+        if (judgeQty == null) {
+            result.append("there is not judge named ");
+            result.append(args[1]);
+            result.append("\n");
+        }
+        else {
+            result.append("------------------------------\n");
+            result.append(args[1]);
+            result.append(" participated in ");
+            result.append(judgeQty);
+            result.append(" judgments\n");
+            result.append("------------------------------\n");
+        }
+
+        return result.toString();
     }
 
-    public Integer getItemsQtyByJudge(Judge judge) {
+    public String getName() {
 
-        return qtyPerJudge.get(judge);
-
+        return this.NAME;
     }
 
-    public void print(String judgeName) {
+    public String getHelp() {
 
-        System.out.println("Quantity of their cases = " + getItemsQtyByJudgeName(judgeName));
+        return this.HELP;
     }
-
 }

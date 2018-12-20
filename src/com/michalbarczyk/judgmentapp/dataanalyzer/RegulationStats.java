@@ -8,19 +8,20 @@ import java.util.*;
  * Class responsible for IX element from the features list
  */
 
-public class RegulationStats /*implements IStats*/ { // IX element from features list
+public class RegulationStats extends BasicConsoleStats {
 
-    private RawDataKeeper rawDataKeeper;
+    private final String NAME = "regulations";
+    private final String HELP = "prints " + TOPSIZE + " most often referenced regulations";
     private List<Map.Entry<ReferencedRegulation, Integer>> top;
     private static final int TOPSIZE = 10;
 
     public RegulationStats(RawDataKeeper rawDataKeeper) {
-        this.rawDataKeeper = rawDataKeeper;
+
+        super(rawDataKeeper);
         this.top = new ArrayList<>();
-        calculateTop();
     }
 
-    private void calculateTop() {
+    private void calculate() {
 
         Map<ReferencedRegulation, Integer> qtyPerRegulation = new HashMap<>();
 
@@ -55,17 +56,41 @@ public class RegulationStats /*implements IStats*/ { // IX element from features
 
     }
 
-    private List<Map.Entry<ReferencedRegulation, Integer>> getTop() {
+    @Override
+    public String getResult() {
 
-        return this.top;
+        if (this.result == null) {
+
+            calculate();
+
+            StringBuilder result = new StringBuilder();
+
+            for (Map.Entry<ReferencedRegulation, Integer> entry : top) {
+
+                result.append(top.indexOf(entry) + 1);
+                result.append(": ");
+                result.append(entry.getKey().getJournalTitle());
+                result.append(" was referenced ");
+                result.append(entry.getValue());
+                result.append(" time(s)\n");
+
+            }
+
+            this.result = result.toString();
+        }
+
+        return this.result;
     }
 
-    public void print() {
+    @Override
+    public String getName() {
 
-        for (Map.Entry<ReferencedRegulation, Integer> entry : top) {
+        return this.NAME;
+    }
 
-            System.out.println((getTop().indexOf(entry) + 1) + ": " + entry.getKey().getJournalTitle() +
-                    " was referenced " + entry.getValue() + " time(s)");
-        }
+    @Override
+    public String getHelp() {
+
+        return this.HELP;
     }
 }

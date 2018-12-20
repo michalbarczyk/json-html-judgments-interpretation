@@ -6,30 +6,33 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class responsible for VI element from the features list
+ * Class responsible for VI element from the features list TODO
  */
 
-public class BestJudgesStats extends JudgeStats /*implements IStats*/ {
+/*
+public class BestJudgesStats extends BasicConsoleStats  {
 
-    private List<Map.Entry<Judge, Integer>> top;
+    private final String NAME = "judges";
+    private final String HELP = "prints " + TOPSIZE + " most active judges";
+    private List<Map.Entry<String, Integer>> top;
     private static final int TOPSIZE = 10;
+    private JudgeStats judgeStats;
 
     public BestJudgesStats(RawDataKeeper rawDataKeeper) {
 
         super(rawDataKeeper);
-        super.calculateStats();
         this.top = new ArrayList<>();
-        this.calculateTop();
+        judgeStats = new JudgeStats(rawDataKeeper);
     }
 
-    private void calculateTop() {
+    private void calculate() {
 
         for (int i = 0; i < TOPSIZE; i++) {
 
-            if (getQtyPerJudge().isEmpty()) break;
-            Map.Entry<Judge, Integer> maxEntry = null;
+            if (judgeStats.getQtyPerJudge().isEmpty()) break;
+            Map.Entry<String, Integer> maxEntry = null;
 
-            for (Map.Entry<Judge, Integer> entry : getQtyPerJudge().entrySet())
+            for (Map.Entry<String, Integer> entry : judgeStats.getQtyPerJudge().entrySet())
             {
                 if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
                 {
@@ -38,22 +41,39 @@ public class BestJudgesStats extends JudgeStats /*implements IStats*/ {
             }
 
             top.add(maxEntry);
-            getQtyPerJudge().remove(maxEntry.getKey());
+            judgeStats.getQtyPerJudge().remove(maxEntry.getKey());
         }
 
     }
 
-    private List<Map.Entry<Judge, Integer>> getTop() {
+    public String getResult() {
 
-        return this.top;
+        if (this.result == null) {
+
+            calculate();
+
+            StringBuilder result = new StringBuilder();
+
+            for (Map.Entry<String, Integer> entry : judgeStats.getQtyPerJudge().entrySet()) {
+
+                result.append()
+            }
+
+            this.result = result.toString();
+        }
+
+        return this.result;
     }
 
-    public void print() {
+    public String getName() {
 
-        for (Map.Entry<Judge, Integer> entry : top) {
+        return this.NAME;
+    }
 
-            System.out.println((getTop().indexOf(entry) + 1) + ": " + entry.getKey().getName() +
-                    " participated in " + entry.getValue() + " judgment(s)");
-        }
+    public String getHelp() {
+
+        return this.HELP;
     }
 }
+
+*/

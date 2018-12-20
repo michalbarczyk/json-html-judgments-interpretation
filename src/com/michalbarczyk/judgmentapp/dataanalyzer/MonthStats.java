@@ -9,19 +9,20 @@ import java.util.Map;
  * Class responsible for VII element from the features list
  */
 
-public class MonthStats /*implements IStats*/ {
+public class MonthStats extends BasicConsoleStats {
 
-    private RawDataKeeper rawDataKeeper;
+    private final String NAME = "months";
+    private final String HELP = "prints number of judgments per months";
     private Map<String, Integer> qtyPerMonth;
 
     public MonthStats(RawDataKeeper rawDataKeeper) {
-        this.rawDataKeeper = rawDataKeeper;
+
+        super(rawDataKeeper);
         qtyPerMonth = new HashMap<>();
-        calculateStats();
+
     }
 
-
-    private void calculateStats() {
+    private void calculate() {
 
         for (Item item : rawDataKeeper.getItems().values()) {
 
@@ -34,18 +35,39 @@ public class MonthStats /*implements IStats*/ {
         }
     }
 
+    @Override
+    public String getResult() {
 
-    public Map getStats() {
+        if (this.result == null) {
 
-        return qtyPerMonth;
-    }
+            calculate();
 
-    public void print() {
+            StringBuilder result = new StringBuilder();
 
-        for (Map.Entry<String, Integer> entry : qtyPerMonth.entrySet()) {
+            for (Map.Entry<String, Integer> entry : qtyPerMonth.entrySet()) {
 
-            System.out.println(entry.getKey() + ": " + entry.getValue() + " judgment(s)");
+                result.append(entry.getKey());
+                result.append(": ");
+                result.append(entry.getValue());
+                result.append(" judgment(s)\n");
+
+            }
+
+            this.result = result.toString();
         }
+
+        return this.result;
     }
 
+    @Override
+    public String getName() {
+
+        return this.NAME;
+    }
+
+    @Override
+    public String getHelp() {
+
+        return this.HELP;
+    }
 }
