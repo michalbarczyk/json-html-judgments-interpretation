@@ -1,15 +1,12 @@
 package com.michalbarczyk.judgmentapp.ui;
 
-import com.michalbarczyk.judgmentapp.Consts;
 import com.michalbarczyk.judgmentapp.Utils;
 import com.michalbarczyk.judgmentapp.dataanalyzer.*;
 import org.fusesource.jansi.AnsiConsole;
 import org.jline.reader.*;
-import org.jline.reader.impl.completer.ArgumentCompleter;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ConsoleInterpreter {
@@ -27,14 +24,16 @@ public class ConsoleInterpreter {
         this.iConsoleInfos = new ArrayList<>();
         this.help = null;
 
+        iConsoleInfos.add(new Rubrum(rawDataKeeper));
+        iConsoleInfos.add(new Content(rawDataKeeper));
+        JudgeStats judgeStats = new JudgeStats(rawDataKeeper);
+        iConsoleInfos.add(judgeStats);
+
         iConsoleStats.add(new CourtTypeStats(rawDataKeeper));
         iConsoleStats.add(new JudgeItemRatioStats(rawDataKeeper));
         iConsoleStats.add(new MonthStats(rawDataKeeper));
         iConsoleStats.add(new RegulationStats(rawDataKeeper));
-
-        iConsoleInfos.add(new Rubrum(rawDataKeeper));
-        iConsoleInfos.add(new Content(rawDataKeeper));
-        iConsoleInfos.add(new JudgeStats(rawDataKeeper));
+        iConsoleStats.add(new BestJudgesStats(rawDataKeeper, judgeStats));
 
     }
 
@@ -43,15 +42,9 @@ public class ConsoleInterpreter {
         AnsiConsole.systemInstall(); // needed to support ansi on Windows cmd
         printWelcomeMessage();
         LineReaderBuilder readerBuilder = LineReaderBuilder.builder();
-        List<Completer> completers = new LinkedList<>();
-        readerBuilder.completer(new ArgumentCompleter(completers));
-
         LineReader reader = readerBuilder.build();
-
         String line;
         String[] parsedLine;
-        PrintWriter out = new PrintWriter(System.out);
-
 
         while ((line = readLine(reader, "")) != null) {
 
@@ -116,6 +109,7 @@ public class ConsoleInterpreter {
     }
 
     private String readLine(LineReader reader, String promtMessage) {
+
         try {
             String line = reader.readLine(promtMessage + "\n>>> ");
             return line.trim();

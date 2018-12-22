@@ -2,6 +2,10 @@ package com.michalbarczyk.judgmentapp.dataanalyzer;
 
 import com.michalbarczyk.judgmentapp.objectrep.Item;
 
+/**
+ * Class responsible for III element from the features list
+ */
+
 public class Content implements IConsoleInfo {
 
     private final String NAME = "content";
@@ -32,7 +36,6 @@ public class Content implements IConsoleInfo {
         }
 
         return result.toString();
-
     }
 
     @Override

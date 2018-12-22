@@ -1,33 +1,40 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
 import com.michalbarczyk.judgmentapp.objectrep.Judge;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 /**
- * Class responsible for VI element from the features list TODO
+ * Class responsible for VI element from the features list
  */
 
-/*
+
 public class BestJudgesStats extends BasicConsoleStats  {
 
     private final String NAME = "judges";
     private final String HELP = "prints " + TOPSIZE + " most active judges";
-    private List<Map.Entry<String, Integer>> top;
+    private List<Map.Entry<Judge, Integer>> qtyPerJudgeList;
     private static final int TOPSIZE = 10;
     private JudgeStats judgeStats;
 
-    public BestJudgesStats(RawDataKeeper rawDataKeeper) {
+    public BestJudgesStats(RawDataKeeper rawDataKeeper, JudgeStats judgeStats) {
 
         super(rawDataKeeper);
-        this.top = new ArrayList<>();
-        judgeStats = new JudgeStats(rawDataKeeper);
+        this.judgeStats = judgeStats;
+        this.qtyPerJudgeList = null;
     }
 
     private void calculate() {
 
-        for (int i = 0; i < TOPSIZE; i++) {
+        qtyPerJudgeList = new ArrayList(judgeStats.getQtyPerJudge().entrySet());
+
+        Collections.sort(qtyPerJudgeList, Map.Entry.comparingByValue());
+
+        Collections.reverse(qtyPerJudgeList);
+
+
+
+        /*for (int i = 0; i < TOPSIZE; i++) {
 
             if (judgeStats.getQtyPerJudge().isEmpty()) break;
             Map.Entry<String, Integer> maxEntry = null;
@@ -42,9 +49,12 @@ public class BestJudgesStats extends BasicConsoleStats  {
 
             top.add(maxEntry);
             judgeStats.getQtyPerJudge().remove(maxEntry.getKey());
-        }
+        }*/
+
 
     }
+
+
 
     public String getResult() {
 
@@ -54,9 +64,12 @@ public class BestJudgesStats extends BasicConsoleStats  {
 
             StringBuilder result = new StringBuilder();
 
-            for (Map.Entry<String, Integer> entry : judgeStats.getQtyPerJudge().entrySet()) {
+            for (int i = 0; i < TOPSIZE; i++) {
 
-                result.append()
+                result.append(i + 1);
+                result.append(": \n");
+                result.append(judgeStats.getResultByJudge(qtyPerJudgeList.get(i).getKey()));
+                result.append("\n");
             }
 
             this.result = result.toString();
@@ -75,5 +88,3 @@ public class BestJudgesStats extends BasicConsoleStats  {
         return this.HELP;
     }
 }
-
-*/

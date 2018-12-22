@@ -1,8 +1,7 @@
 package com.michalbarczyk.judgmentapp.dataanalyzer;
 
-public interface IConsoleStats {
+public interface IConsoleStats extends IConsole {
 
     String getResult();
-    String getName();
-    String getHelp();
+
 }

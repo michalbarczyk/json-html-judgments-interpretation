@@ -3,7 +3,9 @@ package com.michalbarczyk.judgmentapp.dataanalyzer;
 import com.michalbarczyk.judgmentapp.objectrep.Item;
 import com.michalbarczyk.judgmentapp.objectrep.Judge;
 
-import java.util.Map;
+/**
+ * Class responsible for II and IV elements from the features list
+ */
 
 public class Rubrum implements IConsoleInfo {
 
