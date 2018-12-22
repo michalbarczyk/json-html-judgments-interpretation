@@ -1,8 +1,8 @@
 package com.michalbarczyk.judgmentapp;
 
-import com.michalbarczyk.judgmentapp.dataanalyzer.RawDataKeeper;
-import com.michalbarczyk.judgmentapp.objectrep.Converter;
-import com.michalbarczyk.judgmentapp.objectrep.Item;
+import com.michalbarczyk.judgmentapp.analyzer.RawDataKeeper;
+import com.michalbarczyk.judgmentapp.data.Converter;
+
 import java.io.File;
 import java.io.IOException;
 

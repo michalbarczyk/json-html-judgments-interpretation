@@ -1,7 +1,7 @@
-package com.michalbarczyk.judgmentapp.dataanalyzer;
+package com.michalbarczyk.judgmentapp.analyzer;
 
-import com.michalbarczyk.judgmentapp.objectrep.Item;
-import com.michalbarczyk.judgmentapp.objectrep.Judge;
+import com.michalbarczyk.judgmentapp.data.Item;
+import com.michalbarczyk.judgmentapp.data.Judge;
 
 /**
  * Class responsible for II and IV elements from the features list

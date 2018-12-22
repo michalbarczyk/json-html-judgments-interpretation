@@ -1,4 +1,4 @@
-package com.michalbarczyk.judgmentapp.dataanalyzer;
+package com.michalbarczyk.judgmentapp.analyzer;
 
 public interface IConsole {
 

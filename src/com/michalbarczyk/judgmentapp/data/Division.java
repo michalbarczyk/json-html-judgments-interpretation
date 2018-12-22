@@ -1,4 +1,4 @@
-package com.michalbarczyk.judgmentapp.objectrep;
+package com.michalbarczyk.judgmentapp.data;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,36 +11,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "rel",
-        "href"
+        "id"
 })
-public class Link {
+public class Division {
 
-    @JsonProperty("rel")
-    private String rel;
-    @JsonProperty("href")
-    private String href;
+    @JsonProperty("id")
+    private Integer id;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("rel")
-    public String getRel() {
-        return rel;
+    @JsonProperty("id")
+    public Integer getId() {
+        return id;
     }
 
-    @JsonProperty("rel")
-    public void setRel(String rel) {
-        this.rel = rel;
-    }
-
-    @JsonProperty("href")
-    public String getHref() {
-        return href;
-    }
-
-    @JsonProperty("href")
-    public void setHref(String href) {
-        this.href = href;
+    @JsonProperty("id")
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @JsonAnyGetter

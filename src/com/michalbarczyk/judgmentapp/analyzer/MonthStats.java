@@ -1,7 +1,7 @@
-package com.michalbarczyk.judgmentapp.dataanalyzer;
+package com.michalbarczyk.judgmentapp.analyzer;
 
 import com.michalbarczyk.judgmentapp.Utils;
-import com.michalbarczyk.judgmentapp.objectrep.Item;
+import com.michalbarczyk.judgmentapp.data.Item;
 import java.util.HashMap;
 import java.util.Map;
 

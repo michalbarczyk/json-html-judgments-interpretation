@@ -1,18 +1,18 @@
-package com.michalbarczyk.judgmentapp.dataanalyzer;
+package com.michalbarczyk.judgmentapp.analyzer;
 
-import com.michalbarczyk.judgmentapp.objectrep.Item;
+import com.michalbarczyk.judgmentapp.data.Item;
 
 /**
  * Class responsible for III element from the features list
  */
 
-public class Content implements IConsoleInfo {
+public class ContentInfo implements IConsoleInfo {
 
     private final String NAME = "content";
     private final String HELP = "prints content by signature";
     private RawDataKeeper rawDataKeeper;
 
-    public Content(RawDataKeeper rawDataKeeper) {
+    public ContentInfo(RawDataKeeper rawDataKeeper) {
 
         this.rawDataKeeper = rawDataKeeper;
     }

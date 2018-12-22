@@ -1,4 +1,4 @@
-package com.michalbarczyk.judgmentapp.objectrep;
+package com.michalbarczyk.judgmentapp.data;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +27,8 @@ public class Converter {
         if (isJSON(file))
             return objectMapper.readValue(file, JudgmentsPack.class);
 
+
+
         else throw new IllegalArgumentException(file.getName() + " is not JSON file");
     }
 
@@ -36,5 +38,11 @@ public class Converter {
 
         String filename = file.getName();
         return filename.endsWith(".json");
+    }
+
+    private static boolean isHTML(File file) {
+
+        String filename = file.getName();
+        return filename.endsWith(".html");
     }
 }

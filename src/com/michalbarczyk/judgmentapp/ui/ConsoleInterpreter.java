@@ -1,11 +1,10 @@
 package com.michalbarczyk.judgmentapp.ui;
 
 import com.michalbarczyk.judgmentapp.Utils;
-import com.michalbarczyk.judgmentapp.dataanalyzer.*;
+import com.michalbarczyk.judgmentapp.analyzer.*;
 import org.fusesource.jansi.AnsiConsole;
 import org.jline.reader.*;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,15 +24,15 @@ public class ConsoleInterpreter {
         this.help = null;
 
         iConsoleInfos.add(new Rubrum(rawDataKeeper));
-        iConsoleInfos.add(new Content(rawDataKeeper));
-        JudgeStats judgeStats = new JudgeStats(rawDataKeeper);
-        iConsoleInfos.add(judgeStats);
+        iConsoleInfos.add(new ContentInfo(rawDataKeeper));
+        JudgeInfo judgeInfo = new JudgeInfo(rawDataKeeper);
+        iConsoleInfos.add(judgeInfo);
 
         iConsoleStats.add(new CourtTypeStats(rawDataKeeper));
         iConsoleStats.add(new JudgeItemRatioStats(rawDataKeeper));
         iConsoleStats.add(new MonthStats(rawDataKeeper));
         iConsoleStats.add(new RegulationStats(rawDataKeeper));
-        iConsoleStats.add(new BestJudgesStats(rawDataKeeper, judgeStats));
+        iConsoleStats.add(new BestJudgesStats(rawDataKeeper, judgeInfo));
 
     }
 

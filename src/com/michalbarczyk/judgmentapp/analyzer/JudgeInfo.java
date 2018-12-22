@@ -1,14 +1,14 @@
-package com.michalbarczyk.judgmentapp.dataanalyzer;
+package com.michalbarczyk.judgmentapp.analyzer;
 
-import com.michalbarczyk.judgmentapp.objectrep.Item;
-import com.michalbarczyk.judgmentapp.objectrep.Judge;
+import com.michalbarczyk.judgmentapp.data.Item;
+import com.michalbarczyk.judgmentapp.data.Judge;
 import java.util.*;
 
 /**
  * Class responsible for V element from the features list
  */
 
-public class JudgeStats implements IConsoleInfo {
+public class JudgeInfo implements IConsoleInfo {
 
     private final String NAME = "judge";
     private final String HELP = "prints number of judgments a judge participated in";
@@ -16,7 +16,7 @@ public class JudgeStats implements IConsoleInfo {
     private Map<Judge, Integer> qtyPerJudge;
     private boolean calculated;
 
-    public JudgeStats(RawDataKeeper rawDataKeeper) {
+    public JudgeInfo(RawDataKeeper rawDataKeeper) {
 
         this.rawDataKeeper = rawDataKeeper;
         this.qtyPerJudge = new HashMap<>();
