@@ -13,6 +13,11 @@ public class CourtCase {
     @JsonProperty("caseNumber")
     private String caseNumber;
 
+    public CourtCase(String caseNumber) {
+
+        this.caseNumber = caseNumber;
+    }
+
     @JsonProperty("caseNumber")
     public String getCaseNumber() {
         return caseNumber;

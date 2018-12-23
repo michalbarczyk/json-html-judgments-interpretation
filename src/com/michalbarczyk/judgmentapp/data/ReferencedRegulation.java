@@ -32,6 +32,15 @@ public class ReferencedRegulation {
     @JsonProperty("text")
     private String text;
 
+    public ReferencedRegulation(String journalTitle) {
+
+        this.journalTitle = journalTitle;
+        this.journalEntry = null;
+        this.journalNo = null;
+        this.journalYear = null;
+        this.text = null;
+    }
+
     @JsonProperty("journalTitle")
     public String getJournalTitle() {
         return journalTitle;
@@ -92,15 +101,13 @@ public class ReferencedRegulation {
             return false;
         ReferencedRegulation that = (ReferencedRegulation) other;
 
-        return that.journalEntry.equals(this.journalEntry) &&
-               that.journalNo.equals(this.journalNo) &&
-               that.journalYear.equals(this.journalYear);
+        return that.journalTitle.equals(this.journalTitle);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(journalEntry,journalNo,journalYear);
+        return Objects.hash(journalTitle);
     }
 
 }

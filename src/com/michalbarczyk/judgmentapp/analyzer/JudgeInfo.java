@@ -50,8 +50,7 @@ public class JudgeInfo implements IConsoleInfo {
     @Override
     public String getResult(String[] args) {
 
-        Judge judge = new Judge();
-        judge.setName(args[1]);
+        Judge judge = new Judge(args[1]);
 
         return getResultByJudge(judge).toString();
     }

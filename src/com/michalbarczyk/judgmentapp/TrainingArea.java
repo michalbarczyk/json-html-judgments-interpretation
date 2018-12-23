@@ -1,22 +1,20 @@
 package com.michalbarczyk.judgmentapp;
 
 import com.michalbarczyk.judgmentapp.analyzer.RawDataKeeper;
+//import com.michalbarczyk.judgmentapp.data.Converter;
 import com.michalbarczyk.judgmentapp.data.Converter;
-import com.vaadin.external.jsoup.Jsoup;
-import com.vaadin.external.jsoup.nodes.DataNode;
-import com.vaadin.external.jsoup.nodes.Document;
-import com.vaadin.external.jsoup.nodes.Element;
-import com.vaadin.external.jsoup.nodes.Node;
-import com.vaadin.external.jsoup.safety.Whitelist;
-import com.vaadin.external.jsoup.select.Elements;
-import com.vaadin.external.jsoup.select.Selector;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.Cleaner;
 import java.util.*;
 
-import static com.vaadin.external.jsoup.nodes.Document.OutputSettings.Syntax.html;
+
 
 // FOR TEST PURPOSE ONLY // FOR TEST PURPOSE ONLY // FOR TEST PURPOSE ONLY
 
@@ -24,13 +22,13 @@ public class TrainingArea {
 
     public static void main(String[] args) {
 
-        try {
+        //try {
 
-            //RawDataKeeper dK = new RawDataKeeper(Converter.convertAll(new File("C:\\Users\\Michał Barczyk\\Desktop\\json\\json")));
+        //RawDataKeeper dK = new RawDataKeeper(Converter.convertAll(new File("C:\\Users\\Michał Barczyk\\Desktop\\json\\json")));
 
-            //File file = new File("C:\\Users\\Michał Barczyk\\Desktop\\html\\01\\21\\AADA799170.html");
+            /*File file = new File("C:\\Users\\Michał Barczyk\\Desktop\\html\\01\\21\\AADA799170.html");
             //File file = new File("C:\\Users\\Michał Barczyk\\Desktop\\html\\01\\21\\DDF01C4BCD.html");
-            File file = new File("C:\\Users\\Michał Barczyk\\Desktop\\html\\01\\08\\6BBB9A7A42.html");
+            //File file = new File("C:\\Users\\Michał Barczyk\\Desktop\\html\\01\\08\\6BBB9A7A42.html");
 
             Document doc = Jsoup.parse(file, "UTF-8");
 
@@ -61,7 +59,9 @@ public class TrainingArea {
 
                 for (Element r : tds) {
 
-                    System.out.print(" : " + r.text());
+                    System.out.print(" : " + Converter.extractJudgesWithRoles(r.toString()));
+
+
                 }
 
                 System.out.print("\n");
@@ -83,11 +83,11 @@ public class TrainingArea {
             row2 = row2.select("td").get(2);
             System.out.println(row2);*/
 
-
+          /*
         } catch (IOException e) {
             e.printStackTrace();
-        }
-
-
+        } */
+        System.out.print("Sędziowie");
     }
+
 }

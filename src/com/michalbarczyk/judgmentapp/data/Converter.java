@@ -2,16 +2,14 @@ package com.michalbarczyk.judgmentapp.data;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vaadin.external.jsoup.Jsoup;
-
-import com.vaadin.external.jsoup.Jsoup;
-import com.vaadin.external.jsoup.nodes.Document;
-import com.vaadin.external.jsoup.nodes.Element;
-import com.vaadin.external.jsoup.select.Elements;
+import com.michalbarczyk.judgmentapp.Utils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.*;
 
 public class Converter {
@@ -21,8 +19,21 @@ public class Converter {
         List<JudgmentsPack> judgmentsPacks = new ArrayList<>();
         Map<String, Item> items = new HashMap<>();
 
-        for (File file : folder.listFiles())
-            judgmentsPacks.add(convertJSON(file));
+        for (File file : folder.listFiles()) {
+
+            if (isJSON(file)) {
+                judgmentsPacks.add(convertJSON(file));
+            }
+
+            else if (isHTML(file)) {
+
+                Item item = convertHTML(file);
+                items.put(item.getCourtCases().get(0).getCaseNumber(), item);
+            }
+
+            else throw new IllegalArgumentException(file.getName() + " is not JSON/HTML file");
+        }
+
 
         for (JudgmentsPack jP : judgmentsPacks) {
 
@@ -40,12 +51,7 @@ public class Converter {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        if (isJSON(file))
-            return objectMapper.readValue(file, JudgmentsPack.class);
-
-
-
-        else throw new IllegalArgumentException(file.getName() + " is not JSON file");
+        return objectMapper.readValue(file, JudgmentsPack.class);
     }
 
     private static Item convertHTML(File file) throws IOException, IllegalArgumentException {
@@ -53,6 +59,14 @@ public class Converter {
         Item item = new Item();
 
         Document doc = Jsoup.parse(file, "UTF-8");
+
+        Element signature = doc.getElementById("warunek");
+        String[] parsedSignature = Utils.parseLineBy(signature.text(), " -");
+
+        List<CourtCase> courtCases = new ArrayList<>();
+        courtCases.add(new CourtCase(parsedSignature[0]));
+        item.setCourtCases(courtCases);
+
         Element table = doc.select("table").get(3);
 
         Element row0 = table.select("tr").get(0);
@@ -72,13 +86,19 @@ public class Converter {
 
                 td1 = td0.nextElementSibling();
                 item.setCourtType(getCourtType(td1.text()));
-                break;
             }
 
             if (td0.text().equals("Sędziowie")) {
 
                 td1 = td0.nextElementSibling();
+                item.setJudges(extractJudgesWithRoles(td1.toString()));
 
+            }
+
+            if (td0.text().equals("Powołane przepisy")) {
+
+                td1 = td0.nextElementSibling();
+                item.setReferencedRegulations(extractReferencedRegulations(td1.toString()));
 
             }
 
@@ -86,14 +106,11 @@ public class Converter {
 
             if (td0.child(0).text().equals("Uzasadnienie")) {
 
-                System.out.print(td0.child(0).text() + " : " + td0.child(1).text());
-                break;
+                item.setTextContent(td0.child(1).text());
             }
-
-
-
-
         }
+
+        return item;
     }
 
     private static boolean isJSON(File file) {
@@ -137,5 +154,47 @@ public class Converter {
         return "";
     }
 
-    private static List<Judge> extractJudges
+    public static List<Judge> extractJudgesWithRoles(String judges) {
+
+        List<Judge> judgesList = new ArrayList<>();
+
+        String[] parsed = Utils.parseLineBy(judges, "<br>");
+        List<String> judgesNamesWithRoles = new ArrayList<>();
+
+        for (String name : parsed)
+            judgesNamesWithRoles.add(Jsoup.parse(name).text().replaceAll("\\<.*?>",""));
+
+        for (String jNWR : judgesNamesWithRoles) {
+
+            String[] parsedJNWR = Utils.parseLineBy(jNWR, "/");
+
+            List<String> specialRoles = new ArrayList<>();
+
+            if (parsedJNWR.length != 1) {
+
+                specialRoles.add(parsedJNWR[1]);
+            }
+
+            judgesList.add(new Judge(parsedJNWR[0], specialRoles));
+        }
+
+        return judgesList;
+    }
+
+    public static List<ReferencedRegulation> extractReferencedRegulations(String regs) {
+
+        List<String> RefRegTitlesList = new ArrayList<>();
+        List<ReferencedRegulation> RefRefList = new ArrayList<>();
+
+        String[] parsed = Utils.parseLineBy(regs, "<br>");
+
+        for (String name : parsed)
+            RefRegTitlesList.add(Jsoup.parse(name).text().replaceAll("\\<.*?>",""));
+
+        for (String title : RefRegTitlesList)
+            RefRefList.add(new ReferencedRegulation(title));
+
+
+        return RefRefList;
+    }
 }

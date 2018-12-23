@@ -25,6 +25,13 @@ public class Utils {
         return tokens;
     }
 
+    public static String[] parseLineBy(String line, String delims) {
+
+        String[] tokens = line.split(delims);
+
+        return tokens;
+    }
+
     /**
      *
      * @param dateStr
