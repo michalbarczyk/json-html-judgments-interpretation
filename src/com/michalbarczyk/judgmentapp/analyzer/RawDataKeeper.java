@@ -12,38 +12,16 @@ import java.util.Map;
 
 public class RawDataKeeper {
 
-    private List<JudgmentsPack> judgmentsPacks; //original structure as it was in JSON files
-    private Map<String, Item> items; // all judgments from JSON files
+    private Map<String, Item> items;
 
+    public RawDataKeeper(Map<String, Item> items) {
 
-    public RawDataKeeper(List<JudgmentsPack> judgmentsPacks) {
-
-        this.judgmentsPacks = judgmentsPacks;
-        items = new HashMap<>();
-
-        for (JudgmentsPack jP : judgmentsPacks) {
-
-            for (Item item : jP.getItems()) {
-
-                items.put(item.getCourtCases().get(0).getCaseNumber(), item);
-            }
-        }
+        this.items = items;
     }
 
     public Map<String, Item> getItems() {
         return this.items;
     }
-
-    /*public Rubrum getRubrumBySignature(String signature) {
-
-        for (Item item : items.values()) {
-
-            if(item.getCourtCases().get(0).equals(signature))
-                return new Rubrum(item);
-
-        }
-    }*/
-
 
 
 

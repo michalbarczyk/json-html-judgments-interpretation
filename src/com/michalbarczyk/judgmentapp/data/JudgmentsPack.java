@@ -8,25 +8,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "links",
         "items"
 })
 public class JudgmentsPack {
 
-    @JsonProperty("links")
-    private List<Link> links = null;
     @JsonProperty("items")
     private List<Item> items = null;
-
-    @JsonProperty("links")
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    @JsonProperty("links")
-    public void setLinks(List<Link> links) {
-        this.links = links;
-    }
 
     @JsonProperty("items")
     public List<Item> getItems() {
