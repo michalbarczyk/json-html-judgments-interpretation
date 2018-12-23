@@ -3,6 +3,8 @@ package com.michalbarczyk.judgmentapp.data;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.michalbarczyk.judgmentapp.Utils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,12 +16,14 @@ import java.util.*;
 
 public class Converter {
 
-    public static Map<String, Item> convertAll(File folder) throws IOException {
+    public Map<String, Item> convertAll(File folder) throws IOException {
 
         List<JudgmentsPack> judgmentsPacks = new ArrayList<>();
         Map<String, Item> items = new HashMap<>();
 
-        for (File file : folder.listFiles()) {
+        List<File> files = (List<File>) FileUtils.listFiles(folder, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+
+        for (File file : files) {
 
             if (isJSON(file)) {
                 judgmentsPacks.add(convertJSON(file));
@@ -46,7 +50,7 @@ public class Converter {
         return items;
     }
 
-    private static JudgmentsPack convertJSON(File file) throws IOException, IllegalArgumentException {
+    private JudgmentsPack convertJSON(File file) throws IOException, IllegalArgumentException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -54,7 +58,7 @@ public class Converter {
         return objectMapper.readValue(file, JudgmentsPack.class);
     }
 
-    private static Item convertHTML(File file) throws IOException, IllegalArgumentException {
+    private Item convertHTML(File file) throws IOException, IllegalArgumentException {
 
         Item item = new Item();
 
@@ -86,20 +90,21 @@ public class Converter {
 
                 td1 = td0.nextElementSibling();
                 item.setCourtType(getCourtType(td1.text()));
+                continue;
             }
 
             if (td0.text().equals("Sędziowie")) {
 
                 td1 = td0.nextElementSibling();
                 item.setJudges(extractJudgesWithRoles(td1.toString()));
-
+                continue;
             }
 
             if (td0.text().equals("Powołane przepisy")) {
 
                 td1 = td0.nextElementSibling();
                 item.setReferencedRegulations(extractReferencedRegulations(td1.toString()));
-
+                continue;
             }
 
 
@@ -107,25 +112,32 @@ public class Converter {
             if (td0.child(0).text().equals("Uzasadnienie")) {
 
                 item.setTextContent(td0.child(1).text());
+                continue;
             }
         }
+
+        if (item.getJudges() == null) // because of statistic functionalities item.getJudges() must not return null, empty List is ok
+            item.setJudges(new ArrayList<Judge>());
+        if (item.getReferencedRegulations() == null) // because of statistic functionalities item.getReferencedRegulations() must not return null, empty List is ok
+            item.setReferencedRegulations(new ArrayList<ReferencedRegulation>());
+
 
         return item;
     }
 
-    private static boolean isJSON(File file) {
+    private boolean isJSON(File file) {
 
         String filename = file.getName();
         return filename.endsWith(".json");
     }
 
-    private static boolean isHTML(File file) {
+    private boolean isHTML(File file) {
 
         String filename = file.getName();
         return filename.endsWith(".html");
     }
 
-    private static String getCourtType(String courtType) {
+    private  String getCourtType(String courtType) {
 
         if (courtType.startsWith("Wojewódzki")) {
             return "VOIVODESHIP_ADMINISTRATIVE";
@@ -154,7 +166,7 @@ public class Converter {
         return "";
     }
 
-    public static List<Judge> extractJudgesWithRoles(String judges) {
+    private List<Judge> extractJudgesWithRoles(String judges) {
 
         List<Judge> judgesList = new ArrayList<>();
 
@@ -181,7 +193,7 @@ public class Converter {
         return judgesList;
     }
 
-    public static List<ReferencedRegulation> extractReferencedRegulations(String regs) {
+    private List<ReferencedRegulation> extractReferencedRegulations(String regs) {
 
         List<String> RefRegTitlesList = new ArrayList<>();
         List<ReferencedRegulation> RefRefList = new ArrayList<>();

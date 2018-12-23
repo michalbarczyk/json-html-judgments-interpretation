@@ -41,6 +41,8 @@ public class ReferencedRegulation {
         this.text = null;
     }
 
+    public ReferencedRegulation(){} //dummy constructor is needed for Jackson
+
     @JsonProperty("journalTitle")
     public String getJournalTitle() {
         return journalTitle;

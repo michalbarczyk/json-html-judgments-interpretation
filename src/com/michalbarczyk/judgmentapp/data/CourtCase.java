@@ -18,6 +18,8 @@ public class CourtCase {
         this.caseNumber = caseNumber;
     }
 
+    public CourtCase() {} //dummy constructor is needed for Jackson
+
     @JsonProperty("caseNumber")
     public String getCaseNumber() {
         return caseNumber;

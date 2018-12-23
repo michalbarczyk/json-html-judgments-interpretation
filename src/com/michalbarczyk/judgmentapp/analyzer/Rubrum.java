@@ -37,6 +37,7 @@ public class Rubrum implements IConsoleInfo {
         result.append("\n");
 
         result.append("Judges: \n");
+
         for (Judge judge : item.getJudges()) {
             result.append("   ");
             result.append(judge.getName());

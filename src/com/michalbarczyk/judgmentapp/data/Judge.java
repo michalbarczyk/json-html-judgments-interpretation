@@ -44,16 +44,20 @@ public class Judge {
         this.specialRoles = specialRoles;
     }
 
+
     public Judge(String name, List<String> specialRoles) {
 
         this.name = name;
         this.specialRoles = specialRoles;
     }
 
+    
     public Judge(String name) {
 
         this(name, null);
     }
+
+    public Judge() {} //dummy constructor is needed for Jackson
 
 
     @Override

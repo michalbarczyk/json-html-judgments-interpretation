@@ -51,7 +51,6 @@ public class JudgeInfo implements IConsoleInfo {
     public String getResult(String[] args) {
 
         Judge judge = new Judge(args[1]);
-
         return getResultByJudge(judge).toString();
     }
 

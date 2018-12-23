@@ -31,27 +31,6 @@ public class BestJudgesStats extends BasicConsoleStats  {
         Collections.sort(qtyPerJudgeList, Map.Entry.comparingByValue());
 
         Collections.reverse(qtyPerJudgeList);
-
-
-
-        /*for (int i = 0; i < TOPSIZE; i++) {
-
-            if (judgeStats.getQtyPerJudge().isEmpty()) break;
-            Map.Entry<String, Integer> maxEntry = null;
-
-            for (Map.Entry<String, Integer> entry : judgeStats.getQtyPerJudge().entrySet())
-            {
-                if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0)
-                {
-                    maxEntry = entry;
-                }
-            }
-
-            top.add(maxEntry);
-            judgeStats.getQtyPerJudge().remove(maxEntry.getKey());
-        }*/
-
-
     }
 
 

@@ -12,12 +12,26 @@ public class Init {
 
         try {
 
-            RawDataKeeper dK = new RawDataKeeper(Converter.convertAll(new File(args[0])));
-            ConsoleInterpreter cI = new ConsoleInterpreter(dK);
-            cI.run();
+            if (args == null || args.length == 0)
+                throw new IllegalArgumentException("only 1 or 2 args are accepted");
+
+            Converter converter = new Converter();
+            RawDataKeeper rawDataKeeper = new RawDataKeeper(converter.convertAll(new File(args[0])));
+            ConsoleInterpreter consoleInterpreter;
+
+            if (args.length == 1)
+                consoleInterpreter = new ConsoleInterpreter(rawDataKeeper, null);
+
+            else if (args.length == 2)
+                consoleInterpreter = new ConsoleInterpreter(rawDataKeeper, new File(args[1]));
+
+            else throw new IllegalArgumentException("only 1 or 2 args are accepted");
+
+            consoleInterpreter.run();
+
 
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
 

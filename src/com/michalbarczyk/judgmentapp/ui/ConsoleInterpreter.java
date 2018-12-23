@@ -5,6 +5,7 @@ import com.michalbarczyk.judgmentapp.analyzer.*;
 import org.fusesource.jansi.AnsiConsole;
 import org.jline.reader.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +15,15 @@ public class ConsoleInterpreter {
     private List<IConsoleStats> iConsoleStats;
     private List<IConsoleInfo> iConsoleInfos;
     private String help;
+    private File commandFile;
 
-
-    public ConsoleInterpreter(RawDataKeeper rawDataKeeper) {
+    public ConsoleInterpreter(RawDataKeeper rawDataKeeper, File file) {
 
         this.rawDataKeeper = rawDataKeeper;
         this.iConsoleStats = new ArrayList<>();
         this.iConsoleInfos = new ArrayList<>();
         this.help = null;
+        this.commandFile = file;
 
         iConsoleInfos.add(new Rubrum(rawDataKeeper));
         iConsoleInfos.add(new ContentInfo(rawDataKeeper));
@@ -36,7 +38,7 @@ public class ConsoleInterpreter {
 
     }
 
-    public void run() {
+    public void run() throws IOException {
 
         AnsiConsole.systemInstall(); // needed to support ansi on Windows cmd
         printWelcomeMessage();
@@ -44,34 +46,68 @@ public class ConsoleInterpreter {
         LineReader reader = readerBuilder.build();
         String line;
         String[] parsedLine;
+        BufferedWriter writer = null;
 
-        while ((line = readLine(reader, "")) != null) {
+        try {
 
-            parsedLine = Utils.parseLine(line);
+            if (commandFile != null) {
 
-            if (parsedLine[0].equals("help"))
-                System.out.print(getHelp());
-
-            if (parsedLine[0].equals("exit"))
-                break;
-
-            for (IConsoleStats iCS : iConsoleStats) {
-
-                if (parsedLine[0].equals(iCS.getName())) {
-
-                    System.out.print(iCS.getResult());
-                    break;
-                }
+                writer = new BufferedWriter(new FileWriter(commandFile));
             }
 
-            for (IConsoleInfo iCI : iConsoleInfos) {
 
-                if (parsedLine[0].equals(iCI.getName())) {
+            while ((line = readLine(reader, "")) != null) {
 
-                    System.out.print(iCI.getResult(parsedLine));
-                    break;
+                parsedLine = Utils.parseLine(line);
+                StringBuilder currCommands = new StringBuilder();
+
+                currCommands.append(line);
+                currCommands.append(" => ");
+
+                if (parsedLine[0].equals("help")) {
+
+                    System.out.print(getHelp());
+                    currCommands.append(getHelp());
                 }
+
+                if (parsedLine[0].equals("exit"))
+                    break;
+
+                for (IConsoleStats iCS : iConsoleStats) {
+
+                    if (parsedLine[0].equals(iCS.getName())) {
+
+                        System.out.print(iCS.getResult());
+                        currCommands.append(iCS.getResult());
+                        break;
+                    }
+                }
+
+                for (IConsoleInfo iCI : iConsoleInfos) {
+
+                    if (parsedLine[0].equals(iCI.getName())) {
+
+                        System.out.print(iCI.getResult(parsedLine));
+                        currCommands.append(iCI.getResult(parsedLine));
+                        break;
+                    }
+                }
+
+                if (this.commandFile != null) {
+                    writer.write(currCommands.toString());
+                    writer.newLine();
+                    writer.newLine();
+                    writer.newLine();
+                }
+
             }
+
+        } catch (IOException e) {
+            e.getMessage();
+        } finally {
+            if (commandFile != null)
+                writer.close();
+
         }
 
         AnsiConsole.systemUninstall();

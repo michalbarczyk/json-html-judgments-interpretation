@@ -27,6 +27,7 @@ public class RegulationStats extends BasicConsoleStats {
 
         for (Item item : rawDataKeeper.getItems().values()) {
 
+
             for (ReferencedRegulation rR : item.getReferencedRegulations()) {
 
                 if (qtyPerRegulation.containsKey(rR))
