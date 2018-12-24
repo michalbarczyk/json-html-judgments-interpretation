@@ -8,7 +8,7 @@ import java.util.Map;
  * Class responsible for X element from the features list
  */
 
-public class JudgeItemRatioStats extends BasicConsoleStats {
+public class JuryStats extends BasicConsoleStats {
 
 
     private Map<Integer, Integer> qtyPerItem;
@@ -16,7 +16,7 @@ public class JudgeItemRatioStats extends BasicConsoleStats {
     private final String HELP = "prints amount of judges per judgments";
 
 
-    public JudgeItemRatioStats(RawDataKeeper rawDataKeeper) {
+    public JuryStats(RawDataKeeper rawDataKeeper) {
 
         super(rawDataKeeper);
         qtyPerItem = new HashMap<>();

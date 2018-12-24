@@ -21,12 +21,12 @@ public class BestJudgesStats extends BasicConsoleStats  {
 
         super(rawDataKeeper);
         this.judgeInfo = judgeInfo;
-        this.qtyPerJudgeList = null;
+        this.qtyPerJudgeList = new ArrayList<>();
     }
 
     private void calculate() {
 
-        qtyPerJudgeList = new ArrayList(judgeInfo.getQtyPerJudge().entrySet());
+        qtyPerJudgeList.addAll(judgeInfo.getQtyPerJudge().entrySet());
 
         Collections.sort(qtyPerJudgeList, Map.Entry.comparingByValue());
 

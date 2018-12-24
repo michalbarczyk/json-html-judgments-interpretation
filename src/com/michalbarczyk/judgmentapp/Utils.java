@@ -1,5 +1,8 @@
 package com.michalbarczyk.judgmentapp;
 
+import com.michalbarczyk.judgmentapp.data.Judge;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,14 +16,6 @@ public class Utils {
 
         String delims = "-";
         String[] tokens = dateStr.split(delims);
-
-        return tokens;
-    }
-
-    public static String[] parseLine(String line) {
-
-        String delims = "[,]+";
-        String[] tokens = line.split(delims);
 
         return tokens;
     }

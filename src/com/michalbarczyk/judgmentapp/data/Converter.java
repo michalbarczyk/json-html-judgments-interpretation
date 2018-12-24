@@ -179,6 +179,7 @@ public class Converter {
         for (String jNWR : judgesNamesWithRoles) {
 
             String[] parsedJNWR = Utils.parseLineBy(jNWR, "/");
+            parsedJNWR[0] = parsedJNWR[0].trim();
 
             List<String> specialRoles = new ArrayList<>();
 

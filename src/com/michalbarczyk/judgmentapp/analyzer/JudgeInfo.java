@@ -23,6 +23,7 @@ public class JudgeInfo implements IConsoleInfo {
         this.calculated = false;
     }
 
+
     private void calculate() {
 
         for (Item item : rawDataKeeper.getItems().values()) {
@@ -57,7 +58,7 @@ public class JudgeInfo implements IConsoleInfo {
         return getResultByJudge(judge).toString();
     }
 
-    StringBuilder getResultByJudge(Judge judge) {
+    public StringBuilder getResultByJudge(Judge judge) {
 
         if (!calculated)
             calculate();

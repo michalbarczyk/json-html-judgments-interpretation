@@ -33,7 +33,7 @@ public class ConsoleInterpreter {
         iConsoleInfos.add(judgeInfo);
 
         iConsoleStats.add(new CourtTypeStats(rawDataKeeper));
-        iConsoleStats.add(new JudgeItemRatioStats(rawDataKeeper));
+        iConsoleStats.add(new JuryStats(rawDataKeeper));
         iConsoleStats.add(new MonthStats(rawDataKeeper));
         iConsoleStats.add(new RegulationStats(rawDataKeeper));
         iConsoleStats.add(new BestJudgesStats(rawDataKeeper, judgeInfo));
@@ -62,7 +62,7 @@ public class ConsoleInterpreter {
             while ((line = readLine(reader, "")) != null) {
 
                 commandProcessed = false;
-                parsedLine = Utils.parseLine(line);
+                parsedLine = Utils.parseLineBy(line, ",");
 
                 StringBuilder currCommands = new StringBuilder();
                 currCommands.append(line);

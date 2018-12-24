@@ -1,9 +1,12 @@
 package com.michalbarczyk.judgmentapp;
 
+import com.michalbarczyk.judgmentapp.analyzer.BestJudgesStats;
+import com.michalbarczyk.judgmentapp.analyzer.JudgeInfo;
 import com.michalbarczyk.judgmentapp.analyzer.RawDataKeeper;
 //import com.michalbarczyk.judgmentapp.data.Converter;
 import com.michalbarczyk.judgmentapp.data.Converter;
 import com.michalbarczyk.judgmentapp.data.Item;
+import com.michalbarczyk.judgmentapp.data.Judge;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -27,13 +30,13 @@ public class TrainingArea {
 
             Converter converter = new Converter();
             RawDataKeeper dK = new RawDataKeeper(converter.convertAll(new File("C:\\Users\\Michał Barczyk\\Desktop\\Judgments")));
+            JudgeInfo judgeInfo = new JudgeInfo(dK);
+            BestJudgesStats bestJudgesStats = new BestJudgesStats(dK,judgeInfo);
 
-            for (Item item : dK.getItems().values()) {
+            for (Map.Entry<Judge, Integer> entry : judgeInfo.getQtyPerJudge().entrySet()) {
 
-                if (item.getJudges() == null || item.getReferencedRegulations() == null) {
-
-                    System.out.println(item.getCourtCases().get(0).getCaseNumber());
-                }
+                if (entry.getKey().getName().startsWith("Janin"))
+                    System.out.println(entry.getKey().getName() + ": " + entry.getValue());
             }
 
 
