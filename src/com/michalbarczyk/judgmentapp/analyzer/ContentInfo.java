@@ -21,12 +21,16 @@ public class ContentInfo implements IConsoleInfo {
     public String getResult(String[] args) {
 
         StringBuilder result = new StringBuilder();
+
+        if (args.length < 2)
+            return result.append("at least 1 argument needed").toString();
+
         Item item = rawDataKeeper.getItems().get(args[1]);
 
         if (item == null) {
-            result.append("there is not judgment: ");
+            result.append("there is not judgment: \"");
             result.append(args[1]);
-            result.append("\n");
+            result.append("\"\n");
         }
         else {
             result.append("------------------------------\n");

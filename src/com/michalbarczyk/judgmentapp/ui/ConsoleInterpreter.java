@@ -16,6 +16,7 @@ public class ConsoleInterpreter {
     private List<IConsoleInfo> iConsoleInfos;
     private String help;
     private File commandFile;
+    BufferedWriter writer;
 
     public ConsoleInterpreter(RawDataKeeper rawDataKeeper, File file) {
 
@@ -24,6 +25,7 @@ public class ConsoleInterpreter {
         this.iConsoleInfos = new ArrayList<>();
         this.help = null;
         this.commandFile = file;
+        this.writer = null;
 
         iConsoleInfos.add(new Rubrum(rawDataKeeper));
         iConsoleInfos.add(new ContentInfo(rawDataKeeper));
@@ -45,8 +47,9 @@ public class ConsoleInterpreter {
         LineReaderBuilder readerBuilder = LineReaderBuilder.builder();
         LineReader reader = readerBuilder.build();
         String line;
+        String response;
         String[] parsedLine;
-        BufferedWriter writer = null;
+        boolean commandProcessed;
 
         try {
 
@@ -58,46 +61,63 @@ public class ConsoleInterpreter {
 
             while ((line = readLine(reader, "")) != null) {
 
+                commandProcessed = false;
                 parsedLine = Utils.parseLine(line);
-                StringBuilder currCommands = new StringBuilder();
 
+                StringBuilder currCommands = new StringBuilder();
                 currCommands.append(line);
                 currCommands.append(" => ");
-
-                if (parsedLine[0].equals("help")) {
-
-                    System.out.print(getHelp());
-                    currCommands.append(getHelp());
-                }
-
-                if (parsedLine[0].equals("exit"))
-                    break;
 
                 for (IConsoleStats iCS : iConsoleStats) {
 
                     if (parsedLine[0].equals(iCS.getName())) {
 
-                        System.out.print(iCS.getResult());
-                        currCommands.append(iCS.getResult());
+                        response = iCS.getResult();
+                        System.out.print(response);
+                        currCommands.append(response);
+                        fileWriter(currCommands.toString());
+                        commandProcessed = true;
                         break;
                     }
                 }
+
+                if (commandProcessed)
+                    continue;
 
                 for (IConsoleInfo iCI : iConsoleInfos) {
 
                     if (parsedLine[0].equals(iCI.getName())) {
 
-                        System.out.print(iCI.getResult(parsedLine));
-                        currCommands.append(iCI.getResult(parsedLine));
+                        response = iCI.getResult(parsedLine);
+                        System.out.print(response);
+                        currCommands.append(response);
+                        fileWriter(currCommands.toString());
+                        commandProcessed = true;
                         break;
                     }
                 }
 
-                if (this.commandFile != null) {
-                    writer.write(currCommands.toString());
-                    writer.newLine();
-                    writer.newLine();
-                    writer.newLine();
+                if (commandProcessed)
+                    continue;
+
+                if (parsedLine[0].equals("help")) {
+
+                    response = getHelp();
+                    System.out.print(response);
+                    currCommands.append(response);
+                    fileWriter(currCommands.toString());
+                    continue;
+                }
+
+                if (parsedLine[0].equals("exit")) {
+                    fileWriter(currCommands.toString());
+                    break;
+                }
+                else {
+                    response = handleSpellingMistake(parsedLine[0]);
+                    System.out.print(response);
+                    currCommands.append(response);
+                    fileWriter(currCommands.toString());
                 }
 
             }
@@ -155,6 +175,19 @@ public class ConsoleInterpreter {
         }
     }
 
+    private String handleSpellingMistake(String misCommand) {
 
+        return "Command \"" + misCommand + "\" is not recognized, type help";
+    }
 
+    private void fileWriter(String text) throws IOException {
+
+        if (this.commandFile != null) {
+
+            writer.write(text.toString());
+            writer.newLine();
+            writer.newLine();
+            writer.newLine();
+        }
+    }
 }

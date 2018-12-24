@@ -50,6 +50,9 @@ public class JudgeInfo implements IConsoleInfo {
     @Override
     public String getResult(String[] args) {
 
+        if (args.length < 2)
+            return "at least 1 argument needed";
+
         Judge judge = new Judge(args[1]);
         return getResultByJudge(judge).toString();
     }
@@ -63,9 +66,9 @@ public class JudgeInfo implements IConsoleInfo {
         Integer judgeQty = qtyPerJudge.get(judge);
 
         if (judgeQty == null) {
-            result.append("there is not judge named ");
+            result.append("there is not judge named \"");
             result.append(judge.getName());
-            result.append("\n");
+            result.append("\"\n");
         }
         else {
             result.append("------------------------------\n");

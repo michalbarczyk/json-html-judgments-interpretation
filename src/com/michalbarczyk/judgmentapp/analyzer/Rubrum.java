@@ -57,14 +57,17 @@ public class Rubrum implements IConsoleInfo {
 
         StringBuilder result = new StringBuilder();
 
+        if (args.length < 2)
+            return result.append("at least 1 argument needed").toString();
+
         for (int i = 1; i < args.length; i++) {
 
             Item item = rawDataKeeper.getItems().get(args[i]);
 
             if (item == null) {
-                result.append("there is not judgment: ");
+                result.append("there is not judgment: \"");
                 result.append(args[i]);
-                result.append("\n");
+                result.append("\"\n");
             }
             else {
                 result.append(createRubrum(item));
