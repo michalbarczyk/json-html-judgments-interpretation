@@ -1,13 +1,11 @@
 package com.michalbarczyk.judgmentapp.analyzer;
 
 import com.michalbarczyk.judgmentapp.data.Item;
-import com.michalbarczyk.judgmentapp.data.JudgmentsPack;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
- * Class responsible for keeping data possessed from JSON files containing Judgments(Items)
+ * Class responsible for keeping data possessed from JSON/HTML files
+ * containing Judgments (named also as Items)
  */
 
 public class RawDataKeeper {
@@ -22,9 +20,4 @@ public class RawDataKeeper {
     public Map<String, Item> getItems() {
         return this.items;
     }
-
-
-
-
-
 }

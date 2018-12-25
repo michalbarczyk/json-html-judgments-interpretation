@@ -127,7 +127,6 @@ public class ConsoleInterpreter {
         } finally {
             if (commandFile != null)
                 writer.close();
-
         }
 
         AnsiConsole.systemUninstall();
@@ -184,7 +183,7 @@ public class ConsoleInterpreter {
 
         if (this.commandFile != null) {
 
-            writer.write(text.toString());
+            writer.write(text);
             writer.newLine();
             writer.newLine();
             writer.newLine();

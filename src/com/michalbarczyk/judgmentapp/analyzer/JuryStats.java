@@ -10,11 +10,9 @@ import java.util.Map;
 
 public class JuryStats extends BasicConsoleStats {
 
-
     private Map<Integer, Integer> qtyPerItem;
     private final String NAME = "jury";
     private final String HELP = "prints amount of judges per judgments";
-
 
     public JuryStats(RawDataKeeper rawDataKeeper) {
 

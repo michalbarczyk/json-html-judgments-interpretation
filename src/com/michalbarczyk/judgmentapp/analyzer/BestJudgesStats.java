@@ -8,7 +8,6 @@ import java.util.*;
  * Class responsible for VI element from the features list
  */
 
-
 public class BestJudgesStats extends BasicConsoleStats  {
 
     private final String NAME = "judges";
@@ -32,8 +31,6 @@ public class BestJudgesStats extends BasicConsoleStats  {
 
         Collections.reverse(qtyPerJudgeList);
     }
-
-
 
     public String getResult() {
 

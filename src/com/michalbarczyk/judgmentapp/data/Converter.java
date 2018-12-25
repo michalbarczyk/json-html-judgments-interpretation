@@ -38,7 +38,6 @@ public class Converter {
             else throw new IllegalArgumentException(file.getName() + " is not JSON/HTML file");
         }
 
-
         for (JudgmentsPack jP : judgmentsPacks) {
 
             for (Item item : jP.getItems()) {
@@ -112,7 +111,6 @@ public class Converter {
             if (td0.child(0).text().equals("Uzasadnienie")) {
 
                 item.setTextContent(td0.child(1).text());
-                continue;
             }
         }
 

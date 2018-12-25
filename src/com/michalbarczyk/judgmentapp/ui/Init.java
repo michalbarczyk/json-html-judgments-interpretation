@@ -12,7 +12,7 @@ public class Init {
 
         try {
 
-            if (args == null || args.length == 0)
+            if (args == null || args.length == 0 || args.length > 2)
                 throw new IllegalArgumentException("only 1 or 2 args are accepted");
 
             Converter converter = new Converter();
@@ -22,13 +22,10 @@ public class Init {
             if (args.length == 1)
                 consoleInterpreter = new ConsoleInterpreter(rawDataKeeper, null);
 
-            else if (args.length == 2)
+            else
                 consoleInterpreter = new ConsoleInterpreter(rawDataKeeper, new File(args[1]));
 
-            else throw new IllegalArgumentException("only 1 or 2 args are accepted");
-
             consoleInterpreter.run();
-
 
         } catch (IOException e) {
             e.getMessage();

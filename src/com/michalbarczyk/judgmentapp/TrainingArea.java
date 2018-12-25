@@ -7,18 +7,10 @@ import com.michalbarczyk.judgmentapp.analyzer.RawDataKeeper;
 import com.michalbarczyk.judgmentapp.data.Converter;
 import com.michalbarczyk.judgmentapp.data.Item;
 import com.michalbarczyk.judgmentapp.data.Judge;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.Cleaner;
 import java.util.*;
-
-
 
 // FOR TEST PURPOSE ONLY // FOR TEST PURPOSE ONLY // FOR TEST PURPOSE ONLY
 
