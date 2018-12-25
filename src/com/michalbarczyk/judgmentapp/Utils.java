@@ -1,11 +1,5 @@
 package com.michalbarczyk.judgmentapp;
 
-import com.michalbarczyk.judgmentapp.data.Judge;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 public class Utils {
     /**
      *

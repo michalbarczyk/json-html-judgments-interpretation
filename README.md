@@ -1,11 +1,14 @@
 # oop-project-converting-json
-Interpreting judgments in json files, generating statistics
+Interpreting judgments in json and html files (data extraction, generating statistics).
 
-Application features that already work:
-  - console interpreter behaving like Unix console
-  - formating json content to their object representation
-  - features no. i, vi, vii, viii, ix, x  from: https://github.com/apohllo/obiektowe-lab/blob/master/lab8/Readme.md
+Final version of the project.
 
-Application features that do not work yet:
-  - features no. ii, iii, iv, v  from: https://github.com/apohllo/obiektowe-lab/blob/master/lab8/Readme.md
-  (problems with parsing String input in ConsoleInterpreter and not unambiguous CaseNumber)
+Since there are spaces in e.g. judges' names, I decided to parse console input using comma.
+Explanation:
+if (command needs extra argument/arguments)
+    type it like: judge,Mariusz Kotulski
+                  content,II SA/Kr 2063/03
+                  rubrum,II SA/Kr 2063/03,VIII Ka 299/14,I ACz 1094/14,II SA/Bd 205/04
+
+if (command does not need extra arguments)
+    simply type its name, e.g. regulations
