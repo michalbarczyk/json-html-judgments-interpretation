@@ -2,8 +2,8 @@ package com.michalbarczyk.judgmentapp.analyzer;
 
 import com.michalbarczyk.judgmentapp.Utils;
 import com.michalbarczyk.judgmentapp.data.Item;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
 
 /**
  * Class responsible for VII element from the features list
@@ -14,12 +14,13 @@ public class MonthStats extends BasicConsoleStats {
     private final String NAME = "months";
     private final String HELP = "prints number of judgments per months";
     private Map<String, Integer> qtyPerMonth;
+    private List<Map.Entry<String, Integer>> qtyPerMonthList;
 
     public MonthStats(RawDataKeeper rawDataKeeper) {
 
         super(rawDataKeeper);
         qtyPerMonth = new HashMap<>();
-
+        qtyPerMonthList = new ArrayList<>();
     }
 
     private void calculate() {
@@ -33,6 +34,9 @@ public class MonthStats extends BasicConsoleStats {
             else
                 qtyPerMonth.put(YYYYMM, 1);
         }
+
+        this.qtyPerMonthList.addAll(qtyPerMonth.entrySet());
+        Collections.sort(qtyPerMonthList, Map.Entry.comparingByKey());
     }
 
     @Override
@@ -44,7 +48,7 @@ public class MonthStats extends BasicConsoleStats {
 
             StringBuilder result = new StringBuilder();
 
-            for (Map.Entry<String, Integer> entry : qtyPerMonth.entrySet()) {
+            for (Map.Entry<String, Integer> entry : qtyPerMonthList) {
 
                 result.append(entry.getKey());
                 result.append(": ");

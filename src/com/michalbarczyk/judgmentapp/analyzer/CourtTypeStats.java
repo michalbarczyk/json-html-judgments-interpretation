@@ -47,7 +47,10 @@ public class CourtTypeStats extends BasicConsoleStats {
                 result.append(entry.getValue());
                 result.append(" judgments in ");
                 result.append(entry.getKey());
-                result.append(" court\n");
+                if (!entry.getKey().equals("CONSTITUTIONAL_TRIBUNAL") &&
+                    !entry.getKey().equals("NATIONAL_APPEAL_CHAMBER"))
+                        result.append(" court\n");
+                else result.append("\n");
             }
 
             this.result = result.toString();

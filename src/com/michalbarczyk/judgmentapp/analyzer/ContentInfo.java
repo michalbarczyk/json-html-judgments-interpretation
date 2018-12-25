@@ -23,7 +23,7 @@ public class ContentInfo implements IConsoleInfo {
         StringBuilder result = new StringBuilder();
 
         if (args.length < 2)
-            return result.append("at least 1 argument needed").toString();
+            return result.append("1 argument needed").toString();
 
         Item item = rawDataKeeper.getItems().get(args[1]);
 

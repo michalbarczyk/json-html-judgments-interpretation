@@ -48,7 +48,7 @@ public class JuryStats extends BasicConsoleStats {
                 result.append(entry.getKey());
                 result.append(" judge(s) in ");
                 result.append(entry.getValue());
-                result.append(" judgments\n");
+                result.append(" judgment(s)\n");
             }
 
             this.result = result.toString();

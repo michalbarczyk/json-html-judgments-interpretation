@@ -52,7 +52,7 @@ public class JudgeInfo implements IConsoleInfo {
     public String getResult(String[] args) {
 
         if (args.length < 2)
-            return "at least 1 argument needed";
+            return "1 argument needed";
 
         Judge judge = new Judge(args[1]);
         return getResultByJudge(judge).toString();
