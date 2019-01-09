@@ -1,4 +1,4 @@
-# oop-project-converting-json
+# json-html-judgments-interpretation
 Interpreting judgments in json and html files (data extraction, generating statistics).  
   
 Final version of the project.  
