@@ -1,5 +1,5 @@
 # json-html-judgments-interpretation
-Interpreting judgments in json and html files (data extraction, generating statistics).  
+Interpretation of judgments stored in json and html files (data extraction, generating statistics).  
   
 Final version of the project.  
   
